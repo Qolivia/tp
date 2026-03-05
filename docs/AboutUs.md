@@ -11,20 +11,29 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ## Project team
 
+
 ### Gabriel Phua
 
 <img src="images/gab4i3l.png" width="200px">
 
 [[github](https://github.com/gab4i3l)]
 
+### Victoria Chew
+
+<img src="images/victoriachew.png" width="200px">
+
+[[homepage](http://www.comp.nus.edu.sg/~damithch)]
+[[github](https://github.com/victoria-chew)]
+[[portfolio](team/johndoe.md)]
+
+
 * Role: Project Advisor
 
-### Jane Doe
+### Eunwoo Jung
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/qolivia.png" width="200px">
 
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+[[github](http://github.com/Qolivia)]
 
 * Role: Team Lead
 * Responsibilities: UI
@@ -38,15 +47,14 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 * Role: Developer
 * Responsibilities: Data
 
-### Jean Doe
+### Daren Tan
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/darentanrw.png" width="200px">
 
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+[[github](http://github.com/darentanrw)]
 
 * Role: Developer
-* Responsibilities: Dev Ops + Threading
+* Responsibilities: 
 
 ### Qing Rong
 
