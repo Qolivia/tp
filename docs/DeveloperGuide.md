@@ -274,9 +274,9 @@ _{Explain here how the data archiving feature will be implemented}_
 
 **Target user profile**:
 
-* has a need to manage a significant number of contacts
+* has a need to manage multiple freelance tutor contacts for their children
+* wants a structured way to store tutor information (subjects, rates, availability)
 * prefer desktop apps over other types
-* can type fast
 * prefers typing to mouse interactions
 * is reasonably comfortable using CLI apps
 
