@@ -23,12 +23,12 @@ public class Subject {
     /**
      * Constructs a {@code Subject}.
      *
-     * @param name A valid subject name.
+     * @param subject A valid subject name.
      */
     public Subject(String subject) {
         requireNonNull(subject);
         checkArgument(isValidSubject(subject), MESSAGE_CONSTRAINTS);
-        this.subject= subject;
+        this.subject = subject;
     }
 
     /**

@@ -22,11 +22,11 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.Subject;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Subject;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -196,9 +196,13 @@ public class EditCommand extends Command {
             return Optional.ofNullable(address);
         }
 
-        public void setSubject(Subject subject) {this.subject = subject;}
+        public void setSubject(Subject subject) {
+            this.subject = subject;
+        }
 
-        public Optional<Subject> getSubject() {return Optional.ofNullable(subject);}
+        public Optional<Subject> getSubject() {
+            return Optional.ofNullable(subject);
+        }
 
         /**
          * Sets {@code tags} to this object's {@code tags}.
