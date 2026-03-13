@@ -172,6 +172,10 @@ public class MainWindow extends UiPart<Stage> {
             logger.info("Result: " + commandResult.getFeedbackToUser());
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
 
+            if (commandResult.getFoundPersons().isPresent() && !commandResult.getFoundPersons().get().isEmpty()) {
+                resultDisplay.setPersonList(commandResult.getFoundPersons().get());
+            }
+
             if (commandResult.isShowHelp()) {
                 handleHelp();
             }

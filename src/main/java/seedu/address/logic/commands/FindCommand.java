@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -9,6 +10,7 @@ import java.util.stream.Collectors;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
+import seedu.address.logic.commands.CommandResult.PersonIndexPair;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
 
@@ -42,15 +44,17 @@ public class FindCommand extends Command {
                 .filter(predicate)
                 .collect(Collectors.toList());
 
+        List<PersonIndexPair> foundPersonIndices = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
         sb.append(String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, foundPersons.size()));
 
         for (Person p : foundPersons) {
             int index = allPersons.indexOf(p) + 1;
             sb.append("\n").append(index).append(". ").append(Messages.format(p));
+            foundPersonIndices.add(new PersonIndexPair(p, index));
         }
 
-        return new CommandResult(sb.toString());
+        return new CommandResult(sb.toString(), foundPersonIndices);
     }
 
     @Override
