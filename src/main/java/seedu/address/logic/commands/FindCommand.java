@@ -2,8 +2,11 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
+import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.model.Model;
@@ -33,9 +36,21 @@ public class FindCommand extends Command {
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
-        model.updateFilteredPersonList(predicate);
-        return new CommandResult(
-                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredPersonList().size()));
+        model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
+        ObservableList<Person> allPersons = model.getAddressBook().getPersonList();
+        List<Person> foundPersons = allPersons.stream()
+                .filter(predicate)
+                .collect(Collectors.toList());
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, foundPersons.size()));
+
+        for (Person p : foundPersons) {
+            int index = allPersons.indexOf(p) + 1;
+            sb.append("\n").append(index).append(". ").append(Messages.format(p));
+        }
+
+        return new CommandResult(sb.toString());
     }
 
     @Override
