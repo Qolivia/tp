@@ -16,7 +16,7 @@ This guide is written for parents who are comfortable using a keyboard and want 
 </box>
 
 ---
-## Table of Contents 
+## Table of Contents
 
 * [Quick Start](#quick-start)
 * [Understanding the Interface](#understanding-the-interface)
