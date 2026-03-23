@@ -15,16 +15,19 @@ import seedu.address.model.Model;
 import seedu.address.model.person.Person;
 
 /**
- * Finds and lists all persons in address book whose name contains any of the argument keywords.
- * Keyword matching is case insensitive.
+ * Finds and lists all persons in address book whose name, phone, email, address, subject, rate, or tags 
+ * contains any of the argument keywords.
+ * Keyword matching is case insensitive and prefix-based.
  */
 public class FindCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds tutors by name, subject, and/or hourly rate.\n"
-            + "Parameters: [n/NAME [MORE_NAME_KEYWORDS]] [s/SUBJECT]... [r/RATE]\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds tutors by name, subject, hourly rate, or universally across all fields.\n"
+            + "Parameters: [KEYWORD [MORE_KEYWORDS]] [n/NAME [MORE_NAME_KEYWORDS]] [s/SUBJECT]... [r/RATE]\n"
             + "Examples:\n"
+            + COMMAND_WORD + " alice\n"
+            + COMMAND_WORD + " 50\n"
             + COMMAND_WORD + " n/Jo\n"
             + COMMAND_WORD + " s/Math s/Sci\n"
             + COMMAND_WORD + " r/16 s/Math\n"

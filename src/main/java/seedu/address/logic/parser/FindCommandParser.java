@@ -17,6 +17,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Rate;
 import seedu.address.model.person.RateEqualsPredicate;
 import seedu.address.model.person.Subject;
+import seedu.address.model.person.UniversalSearchPredicate;
 
 /**
  * Parses input arguments and creates a new FindCommand object.
@@ -33,6 +34,11 @@ public class FindCommandParser implements Parser<FindCommand> {
         ArgumentMultimap argMultimap = tokenizeAndValidate(args);
 
         Predicate<Person> combinedPredicate = person -> true;
+
+        if (!argMultimap.getPreamble().isEmpty()) {
+            String[] keywords = argMultimap.getPreamble().split("\\s+");
+            combinedPredicate = combinedPredicate.and(new UniversalSearchPredicate(Arrays.asList(keywords)));
+        }
 
         if (hasName(argMultimap)) {
             combinedPredicate = combinedPredicate.and(parseNamePredicate(argMultimap));
@@ -64,11 +70,10 @@ public class FindCommandParser implements Parser<FindCommand> {
     }
 
     private boolean isValidFindInput(ArgumentMultimap argMultimap) {
-        if (!argMultimap.getPreamble().isEmpty()) {
-            return false;
-        }
-
-        return hasName(argMultimap) || hasRate(argMultimap) || hasSubject(argMultimap);
+        return !argMultimap.getPreamble().isEmpty()
+                || hasName(argMultimap)
+                || hasRate(argMultimap)
+                || hasSubject(argMultimap);
     }
 
     private Predicate<Person> parseNamePredicate(ArgumentMultimap argMultimap) throws ParseException {
