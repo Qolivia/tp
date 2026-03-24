@@ -36,6 +36,15 @@ public class TagContainsKeywordsPredicate implements Predicate<Person> {
     }
 
     /**
+     * Constructs a {@code TagContainsKeywordsPredicate} with default matching logic (OR).
+     *
+     * @param keywords The list of keywords to search for.
+     */
+    public TagContainsKeywordsPredicate(List<String> keywords) {
+        this(keywords, false);
+    }
+
+    /**
      * Normalize the supplied keywords to a lower-cased, trimmed, unmodifiable list.
      * This keeps the constructor at a higher level of abstraction.
      */
@@ -48,15 +57,6 @@ public class TagContainsKeywordsPredicate implements Predicate<Person> {
                         .map(s -> s == null ? "" : s.trim().toLowerCase())
                         .collect(Collectors.toList())
         );
-    }
-
-    /**
-     * Constructs a {@code TagContainsKeywordsPredicate} with default matching logic (OR).
-     *
-     * @param keywords The list of keywords to search for.
-     */
-    public TagContainsKeywordsPredicate(List<String> keywords) {
-        this(keywords, false);
     }
 
     @Override

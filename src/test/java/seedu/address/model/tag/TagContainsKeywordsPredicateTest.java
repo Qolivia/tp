@@ -92,11 +92,13 @@ public class TagContainsKeywordsPredicateTest {
     public void toStringMethod() {
         List<String> keywords = List.of("keyword1", "keyword2");
         TagContainsKeywordsPredicate predicate = new TagContainsKeywordsPredicate(keywords);
-        String expected = TagContainsKeywordsPredicate.class.getCanonicalName() + "{keywords=" + keywords + ", isMatchAll=false}";
+        String expected = TagContainsKeywordsPredicate.class.getCanonicalName()
+                + "{keywords=" + keywords + ", isMatchAll=false}";
         assertEquals(expected, predicate.toString());
 
         TagContainsKeywordsPredicate predicateAll = new TagContainsKeywordsPredicate(keywords, true);
-        String expectedAll = TagContainsKeywordsPredicate.class.getCanonicalName() + "{keywords=" + keywords + ", isMatchAll=true}";
+        String expectedAll = TagContainsKeywordsPredicate.class.getCanonicalName()
+                + "{keywords=" + keywords + ", isMatchAll=true}";
         assertEquals(expectedAll, predicateAll.toString());
     }
 
@@ -104,12 +106,14 @@ public class TagContainsKeywordsPredicateTest {
 
     private void assertMatch(TagContainsKeywordsPredicate predicate, String... personTags) {
         Person person = new PersonBuilder().withTags(personTags).build();
-        assertTrue(predicate.test(person), "Expected predicate to match Person with tags: " + Arrays.toString(personTags));
+        assertTrue(predicate.test(person),
+                "Expected predicate to match Person with tags: " + Arrays.toString(personTags));
     }
 
     private void assertNoMatch(TagContainsKeywordsPredicate predicate, String... personTags) {
         Person person = new PersonBuilder().withTags(personTags).build();
-        assertFalse(predicate.test(person), "Expected predicate NOT to match Person with tags: " + Arrays.toString(personTags));
+        assertFalse(predicate.test(person),
+                "Expected predicate NOT to match Person with tags: " + Arrays.toString(personTags));
     }
 
     private static TagContainsKeywordsPredicate predicate(String singleKeyword) {

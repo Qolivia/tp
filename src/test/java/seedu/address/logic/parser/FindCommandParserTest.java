@@ -105,21 +105,21 @@ public class FindCommandParserTest {
     }
 
     @Test
-    public void parse_specificRate_leadingZeroes_returnsFindCommand() throws Exception {
+    public void parse_specificRateLeadingZeroes() throws Exception {
         FindCommand commandRate = parser.parse(" r/007");
         assertMatch(commandRate, personWithRate("007"));
         assertNoMatch(commandRate, personWithRate("7"));
     }
 
     @Test
-    public void parse_specificSubject_whitespaceHandling_returnsFindCommand() throws Exception {
+    public void parse_specificSubjectWhitespace() throws Exception {
         FindCommand commandSubject = parser.parse(" s/  Bio  ");
         assertMatch(commandSubject, personWithSubject("Biology"));
         assertNoMatch(commandSubject, personWithSubject("Chemistry"));
     }
 
     @Test
-    public void parse_specificTag_whitespaceHandling_returnsFindCommand() throws Exception {
+    public void parse_specificTagWhitespace() throws Exception {
         FindCommand commandTag = parser.parse(" t/  friend  ");
         assertMatch(commandTag, personWithTags("friend"));
         assertNoMatch(commandTag, personWithTags("stranger"));
@@ -138,7 +138,7 @@ public class FindCommandParserTest {
     }
 
     @Test
-    public void parse_multiplePrefixes_nameRateSubject_returnsAndLogic() throws Exception {
+    public void parse_multiplePrefixesNameRateSubject() throws Exception {
         FindCommand command2 = parser.parse(" n/Ali r/17 s/Bio");
         assertMatch(command2, personWithNameRateSubject("Alice", "17", "Biology"));
         assertNoMatch(command2,
@@ -153,14 +153,14 @@ public class FindCommandParserTest {
     }
 
     @Test
-    public void parse_multipleSubjects_orLogic_returnsFindCommand() throws Exception {
+    public void parse_multipleSubjectsOrLogic() throws Exception {
         FindCommand commandSubject = parser.parse(" s/Bio s/Math");
         assertMatch(commandSubject, personWithSubject("Biology"), personWithSubject("Math"));
         assertNoMatch(commandSubject, personWithSubject("Physics"));
     }
 
     @Test
-    public void parse_multipleTags_orLogic_returnsFindCommand() throws Exception {
+    public void parse_multipleTagsOrLogic() throws Exception {
         FindCommand commandTagPrefixes = parser.parse(" t/friend t/colleague");
         FindCommand commandTagTokens = parser.parse(" t/friend colleague");
 

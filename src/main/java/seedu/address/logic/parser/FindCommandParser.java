@@ -240,7 +240,6 @@ public class FindCommandParser implements Parser<FindCommand> {
     private Predicate<Person> parseTagPredicate(ArgumentMultimap argMultimap) throws ParseException {
         List<String> tagArgs = argMultimap.getAllValues(PREFIX_TAG);
         List<String> normalizedTags = normalizeAndValidateTags(tagArgs);
-        
         boolean isUniversalSearch = hasPreamble(argMultimap);
         return new TagContainsKeywordsPredicate(normalizedTags, isUniversalSearch);
     }

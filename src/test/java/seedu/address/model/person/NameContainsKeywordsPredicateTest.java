@@ -45,7 +45,8 @@ public class NameContainsKeywordsPredicateTest {
     @Test
     public void test_nameContainsKeywordsMatchAll_returnsCheck() {
         // Match All: "Alice" AND "Bob"
-        NameContainsKeywordsPredicate predicate = new NameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob"), true);
+        NameContainsKeywordsPredicate predicate = new NameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob"),
+                true);
 
         // Matches both -> True
         assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
@@ -53,7 +54,7 @@ public class NameContainsKeywordsPredicateTest {
         // Matches one -> False
         assertFalse(predicate.test(new PersonBuilder().withName("Alice Carol").build()));
 
-         // Matches neither -> False
+        // Matches neither -> False
         assertFalse(predicate.test(new PersonBuilder().withName("Carol David").build()));
     }
 
@@ -88,8 +89,9 @@ public class NameContainsKeywordsPredicateTest {
 
         // Keywords match phone, email and address, but does not match name
         predicate = new NameContainsKeywordsPredicate(Arrays.asList("12345", "alice@email.com", "Main", "Street"));
-        assertFalse(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345")
-                .withEmail("alice@email.com").withAddress("Main Street").build()));
+        assertFalse(predicate.test(
+                new PersonBuilder().withName("Alice").withPhone("12345")
+                        .withEmail("alice@email.com").withAddress("Main Street").build()));
     }
 
     @Test
@@ -97,7 +99,8 @@ public class NameContainsKeywordsPredicateTest {
         List<String> keywords = List.of("keyword1", "keyword2");
         NameContainsKeywordsPredicate predicate = new NameContainsKeywordsPredicate(keywords);
 
-        String expected = NameContainsKeywordsPredicate.class.getCanonicalName() + "{keywords=" + keywords + ", isMatchAll=false}";
+        String expected = NameContainsKeywordsPredicate.class.getCanonicalName()
+                + "{keywords=" + keywords + ", isMatchAll=false}";
         assertEquals(expected, predicate.toString());
     }
 }

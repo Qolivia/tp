@@ -19,14 +19,17 @@ public class SubjectContainsKeywordsPredicateTest {
         List<String> firstPredicateKeywordList = Collections.singletonList("first");
         List<String> secondPredicateKeywordList = Arrays.asList("first", "second");
 
-        SubjectContainsKeywordsPredicate firstPredicate = new SubjectContainsKeywordsPredicate(firstPredicateKeywordList);
-        SubjectContainsKeywordsPredicate secondPredicate = new SubjectContainsKeywordsPredicate(secondPredicateKeywordList);
+        SubjectContainsKeywordsPredicate firstPredicate =
+                new SubjectContainsKeywordsPredicate(firstPredicateKeywordList);
+        SubjectContainsKeywordsPredicate secondPredicate =
+                new SubjectContainsKeywordsPredicate(secondPredicateKeywordList);
 
         // same object -> returns true
         assertTrue(firstPredicate.equals(firstPredicate));
 
         // same values -> returns true
-        SubjectContainsKeywordsPredicate firstPredicateCopy = new SubjectContainsKeywordsPredicate(firstPredicateKeywordList);
+        SubjectContainsKeywordsPredicate firstPredicateCopy =
+                new SubjectContainsKeywordsPredicate(firstPredicateKeywordList);
         assertTrue(firstPredicate.equals(firstPredicateCopy));
 
         // different types -> returns false
@@ -45,7 +48,8 @@ public class SubjectContainsKeywordsPredicateTest {
     @Test
     public void test_subjectContainsKeywords_returnsTrue() {
         // One keyword
-        SubjectContainsKeywordsPredicate predicate = new SubjectContainsKeywordsPredicate(Collections.singletonList("Math"));
+        SubjectContainsKeywordsPredicate predicate =
+                new SubjectContainsKeywordsPredicate(Collections.singletonList("Math"));
         assertTrue(predicate.test(new PersonBuilder().withSubject("Math").build()));
 
         // Multiple keywords (OR)
@@ -71,7 +75,8 @@ public class SubjectContainsKeywordsPredicateTest {
     @Test
     public void test_subjectContainsKeywordsMatchAll_returnsCheck() {
         // Match All: "Math" AND "Physics"
-        SubjectContainsKeywordsPredicate predicate = new SubjectContainsKeywordsPredicate(Arrays.asList("Math", "Physics"), true);
+        SubjectContainsKeywordsPredicate predicate =
+                new SubjectContainsKeywordsPredicate(Arrays.asList("Math", "Physics"), true);
 
         // Matches both -> True
         assertTrue(predicate.test(new PersonBuilder().withSubject("Math", "Physics").build()));
@@ -88,7 +93,8 @@ public class SubjectContainsKeywordsPredicateTest {
         List<String> keywords = List.of("keyword1", "keyword2");
         SubjectContainsKeywordsPredicate predicate = new SubjectContainsKeywordsPredicate(keywords);
 
-        String expected = SubjectContainsKeywordsPredicate.class.getCanonicalName() + "{keywords=" + keywords + ", isMatchAll=false}";
+        String expected = SubjectContainsKeywordsPredicate.class.getCanonicalName()
+                + "{keywords=" + keywords + ", isMatchAll=false}";
         assertEquals(expected, predicate.toString());
     }
 }

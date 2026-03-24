@@ -16,7 +16,8 @@ public class NameContainsKeywordsPredicate implements Predicate<Person> {
     /**
      * Constructs a {@code NameContainsKeywordsPredicate}.
      *
-     * @param keywords The list of keywords to search for.* @param isMatchAll If true, matches all keywords (AND logic). If false, matches any keyword (OR logic).
+     * @param keywords The list of keywords to search for.
+     * @param isMatchAll If true, matches all keywords (AND logic). If false, matches any keyword (OR logic).
      */
     public NameContainsKeywordsPredicate(List<String> keywords, boolean isMatchAll) {
         this.keywords = keywords;
