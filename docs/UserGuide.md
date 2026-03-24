@@ -24,6 +24,7 @@ This guide is written for parents who are comfortable using a keyboard and want 
     * [Viewing Help](#viewing-help-help)
     * [Adding a Tutor](#adding-a-tutor-add)
     * [Listing All Tutors](#listing-all-tutors-list)
+    * [Sorting the Tutor List](#sorting-the-tutor-list-sort)
     * [Editing a Tutor Profile](#editing-a-tutor-profile-edit)
     * [Finding Tutors](#finding-tutors-find)
     * [Deleting a Tutor](#deleting-a-tutor-delete)
@@ -86,6 +87,7 @@ Type a command into the **Command Box** at the top and press **Enter** to run it
 | View all tutors | `list` |
 | Add a new tutor | `add n/Jane Smith p/91234567 e/jane@example.com s/Mathematics r/60` |
 | Find tutors by subject | `find s/Mathematics` |
+| Sort tutors by name (A–Z) | `sort name asc` |
 | Delete the 1st tutor | `delete 1` |
 | Open help | `help` |
 | Exit the app | `exit` |
@@ -138,6 +140,19 @@ The following conventions apply to all commands in this guide:
 <box type="warning" seamless>
 
 **Note for PDF users:** If you copy commands from a PDF, line breaks may introduce unexpected spaces. Re-type the command manually if it does not execute as expected.
+
+</box>
+
+<box type="warning" seamless>
+
+**Displayed indices change after `sort` and `delete`**
+
+Commands such as `edit` and `delete` use **`INDEX`**: the number shown beside each tutor in the **Tutor List Panel** for the **current** list order.
+
+* After a **`sort`** command, tutors are reordered, so the same person may appear at a **different** index than before.
+* After a **`delete`** command, the list becomes shorter and tutors below the removed row **shift up**, so their indices are **renumbered** (what was “tutor 5” may become “tutor 4”).
+
+**Always look at the Tutor List Panel again** before typing the next `edit` or `delete` command. Do not assume indices from an earlier step are still correct.
 
 </box>
 
@@ -222,6 +237,45 @@ Displays all tutor profiles stored in Tuto.
 
 ---
 
+### Sorting the Tutor List : `sort`
+
+Changes the **order** of tutors in the Tutor List Panel. Sorting is by **name** or **hourly rate** only; it does not remove or hide tutors.
+
+**Format:**
+```
+sort FIELD ORDER
+```
+
+| Part | Meaning | Allowed values |
+|---|---|---|
+| `FIELD` | What to sort by | `name` or `rate` (case-insensitive) |
+| `ORDER` | Sort direction | `asc` (ascending) or `desc` (descending) (case-insensitive) |
+
+* **Name:** Alphabetical order by full name (case-insensitive).
+* **Rate:** Numeric order by hourly rate. If two tutors have the **same rate**, they are ordered by **name** (ascending) as a tie-break.
+
+**Examples:**
+
+```
+sort name asc
+```
+Shows tutors from A → Z by name.
+
+```
+sort rate desc
+```
+Shows highest hourly rate first.
+
+**Expected output:** A confirmation message in the Result Display, and the Tutor List Panel updates to the new order. The header above the list also reflects the active sort.
+
+<box type="warning" seamless>
+
+**Indices update after sorting:** Because `edit` and `delete` use the position number in the **current** list, running `sort` changes which tutor is at each index. See [Displayed indices change after `sort` and `delete`](#notes-on-command-format) before your next command.
+
+</box>
+
+---
+
 ### Editing a Tutor Profile : `edit`
 
 Updates one or more fields of an existing tutor profile.
@@ -232,6 +286,7 @@ edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [s/SUBJECT] [r/RATE] [t/TAG]
 ```
 
 * `INDEX` refers to the number shown next to the tutor in the current list. It must be a **positive integer** (1, 2, 3 …).
+* After a **`sort`** or **`delete`**, indices may no longer match what you saw earlier — see [Displayed indices change after `sort` and `delete`](#notes-on-command-format).
 * At least one field must be provided.
 * Existing values are replaced with the new values you provide.
 
@@ -329,6 +384,7 @@ Permanently removes a tutor profile from Tuto.
 **Format:** `delete INDEX`
 
 * `INDEX` must be a **positive integer** matching a tutor's position in the currently displayed list.
+* After you delete someone, **every tutor below that row moves up** and gets a new index. After a **`sort`**, positions change too. See [Displayed indices change after `sort` and `delete`](#notes-on-command-format).
 
 <box type="warning" seamless>
 
@@ -444,6 +500,7 @@ A: The Help Window may be minimised. Check your taskbar and restore it manually.
 | **Help** | `help` | `help` |
 | **Add** | `add n/NAME p/PHONE e/EMAIL [a/ADDRESS] s/SUBJECT r/RATE [t/TAG]…` | `add n/James Ho p/22224444 e/james@example.com s/Biology r/45` |
 | **List** | `list` | `list` |
+| **Sort** | `sort FIELD ORDER` | `sort name asc`, `sort rate desc` |
 | **Edit** | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [s/SUBJECT] [r/RATE] [t/TAG]…` | `edit 2 n/James Lee e/james@example.com` |
 | **Find** | `find n/KEYWORD [MORE_KEYWORDS]` \| `find s/SUBJECT` \| `find r/RATE` | `find n/James`, `find s/Biology`, `find r/45` |
 | **Delete** | `delete INDEX` | `delete 3` |
