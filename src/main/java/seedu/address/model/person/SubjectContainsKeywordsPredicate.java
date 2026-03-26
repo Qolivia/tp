@@ -10,26 +10,14 @@ import seedu.address.commons.util.ToStringBuilder;
  */
 public class SubjectContainsKeywordsPredicate implements Predicate<Person> {
     private final List<String> keywords;
-    private final boolean isMatchAll;
 
     /**
      * Constructs a {@code SubjectContainsKeywordsPredicate}.
      *
      * @param keywords The list of keywords to search for.
-     * @param isMatchAll If true, matches all keywords (AND logic). If false, matches any keyword (OR logic).
-     */
-    public SubjectContainsKeywordsPredicate(List<String> keywords, boolean isMatchAll) {
-        this.keywords = keywords;
-        this.isMatchAll = isMatchAll;
-    }
-
-    /**
-     * Constructs a {@code SubjectContainsKeywordsPredicate} with default matching logic (OR).
-     *
-     * @param keywords The list of keywords to search for.
      */
     public SubjectContainsKeywordsPredicate(List<String> keywords) {
-        this(keywords, false);
+        this.keywords = keywords;
     }
 
     @Override
@@ -41,7 +29,7 @@ public class SubjectContainsKeywordsPredicate implements Predicate<Person> {
 
         List<String> personSubjectsLower = getPersonSubjectsLower(person);
 
-        return isMatchAll ? matchesAll(personSubjectsLower) : matchesAny(personSubjectsLower);
+        return matchesAll(personSubjectsLower);
     }
 
     private boolean isKeywordsEmpty() {
@@ -57,11 +45,6 @@ public class SubjectContainsKeywordsPredicate implements Predicate<Person> {
     private boolean matchesAll(List<String> personSubjectsLower) {
         return keywords.stream()
                 .allMatch(keyword -> hasSubjectMatchingKeywordLower(personSubjectsLower, keyword));
-    }
-
-    private boolean matchesAny(List<String> personSubjectsLower) {
-        return keywords.stream()
-                .anyMatch(keyword -> hasSubjectMatchingKeywordLower(personSubjectsLower, keyword));
     }
 
     private boolean hasSubjectMatchingKeywordLower(List<String> personSubjectsLower, String keyword) {
@@ -83,16 +66,13 @@ public class SubjectContainsKeywordsPredicate implements Predicate<Person> {
 
         SubjectContainsKeywordsPredicate otherSubjectContainsKeywordsPredicate =
                 (SubjectContainsKeywordsPredicate) other;
-        return keywords.equals(otherSubjectContainsKeywordsPredicate.keywords)
-                && isMatchAll == otherSubjectContainsKeywordsPredicate.isMatchAll;
+        return keywords.equals(otherSubjectContainsKeywordsPredicate.keywords);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .add("keywords", keywords)
-                .add("isMatchAll", isMatchAll)
                 .toString();
     }
 }
-

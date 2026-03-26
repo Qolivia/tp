@@ -22,8 +22,6 @@ public class TagContainsKeywordsPredicateTest {
 
         TagContainsKeywordsPredicate firstPredicate = predicate(firstPredicateKeywordList);
         TagContainsKeywordsPredicate secondPredicate = predicate(secondPredicateKeywordList);
-        // Test different isMatchAll property
-        TagContainsKeywordsPredicate thirdPredicate = predicateAll(firstPredicateKeywordList);
 
         // same object -> returns true
         assertTrue(firstPredicate.equals(firstPredicate));
@@ -40,9 +38,6 @@ public class TagContainsKeywordsPredicateTest {
 
         // different keywords -> returns false
         assertFalse(firstPredicate.equals(secondPredicate));
-
-        // different isMatchAll -> returns false
-        assertFalse(firstPredicate.equals(thirdPredicate));
     }
 
     @Test
@@ -51,40 +46,35 @@ public class TagContainsKeywordsPredicateTest {
         TagContainsKeywordsPredicate predicate = predicate("friend");
         assertMatch(predicate, "friend", "colleague");
 
-        // Multiple keywords, one matching (OR logic)
-        predicate = predicate(Arrays.asList("friend", "family"));
+        // Multiple keywords (AND logic)
+        predicate = predicate(Arrays.asList("friend", "colleague"));
         assertMatch(predicate, "friend", "colleague");
 
         // Multiple keywords, mixed case
         predicate = predicate(Arrays.asList("frIeNd", "coLLeaGue"));
         assertMatch(predicate, "friend", "colleague");
-
-        // Zero keywords -> False
-        predicate = predicate(Collections.emptyList());
-        assertNoMatch(predicate, "friend");
-
-        // Non-matching keyword -> False
-        predicate = predicate(Arrays.asList("classmate"));
-        assertNoMatch(predicate, "friend", "colleague");
     }
 
     @Test
     public void test_exclusiveSearch_returnsCorrectResult() {
-
         // One keyword matching
-        TagContainsKeywordsPredicate predicate = predicateAll(Collections.singletonList("friend"));
+        TagContainsKeywordsPredicate predicate = predicate(Collections.singletonList("friend"));
         assertMatch(predicate, "friend", "colleague");
 
         // All keywords matching (AND logic)
-        predicate = predicateAll(Arrays.asList("friend", "colleague"));
+        predicate = predicate(Arrays.asList("friend", "colleague"));
         assertMatch(predicate, "friend", "colleague", "neighbor");
 
         // Only one matching keyword -> False (AND logic requirements not met)
-        predicate = predicateAll(Arrays.asList("friend", "family"));
+        predicate = predicate(Arrays.asList("friend", "family"));
         assertNoMatch(predicate, "friend", "colleague");
 
         // No matching keywords -> False
-        predicate = predicateAll(Arrays.asList("classmate"));
+        predicate = predicate(Arrays.asList("classmate"));
+        assertNoMatch(predicate, "friend");
+
+        // Zero keywords -> False
+        predicate = predicate(Collections.emptyList());
         assertNoMatch(predicate, "friend");
     }
 
@@ -93,13 +83,8 @@ public class TagContainsKeywordsPredicateTest {
         List<String> keywords = List.of("keyword1", "keyword2");
         TagContainsKeywordsPredicate predicate = new TagContainsKeywordsPredicate(keywords);
         String expected = TagContainsKeywordsPredicate.class.getCanonicalName()
-                + "{keywords=" + keywords + ", isMatchAll=false}";
+                + "{keywords=" + keywords + "}";
         assertEquals(expected, predicate.toString());
-
-        TagContainsKeywordsPredicate predicateAll = new TagContainsKeywordsPredicate(keywords, true);
-        String expectedAll = TagContainsKeywordsPredicate.class.getCanonicalName()
-                + "{keywords=" + keywords + ", isMatchAll=true}";
-        assertEquals(expectedAll, predicateAll.toString());
     }
 
     // ================= HELPER METHODS =================
@@ -122,13 +107,5 @@ public class TagContainsKeywordsPredicateTest {
 
     private static TagContainsKeywordsPredicate predicate(List<String> keywords) {
         return new TagContainsKeywordsPredicate(keywords);
-    }
-
-    private static TagContainsKeywordsPredicate predicateAll(List<String> keywords) {
-        return new TagContainsKeywordsPredicate(keywords, true);
-    }
-
-    private static TagContainsKeywordsPredicate predicateAll(String singleKeyword) {
-        return new TagContainsKeywordsPredicate(Collections.singletonList(singleKeyword), true);
     }
 }

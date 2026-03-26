@@ -40,9 +40,6 @@ public class SubjectContainsKeywordsPredicateTest {
 
         // different predicate -> returns false
         assertFalse(firstPredicate.equals(secondPredicate));
-
-        // different isMatchAll -> returns false
-        assertFalse(firstPredicate.equals(new SubjectContainsKeywordsPredicate(firstPredicateKeywordList, true)));
     }
 
     @Test
@@ -52,13 +49,13 @@ public class SubjectContainsKeywordsPredicateTest {
                 new SubjectContainsKeywordsPredicate(Collections.singletonList("Math"));
         assertTrue(predicate.test(new PersonBuilder().withSubject("Math").build()));
 
-        // Multiple keywords (OR)
+        // Multiple keywords (AND)
         predicate = new SubjectContainsKeywordsPredicate(Arrays.asList("Math", "Physics"));
-        assertTrue(predicate.test(new PersonBuilder().withSubject("Math", "Biology").build()));
+        assertTrue(predicate.test(new PersonBuilder().withSubject("Math", "Physics").build()));
 
         // Mixed-case keywords
         predicate = new SubjectContainsKeywordsPredicate(Arrays.asList("mAtH", "pHySiCs"));
-        assertTrue(predicate.test(new PersonBuilder().withSubject("Math").build()));
+        assertTrue(predicate.test(new PersonBuilder().withSubject("Math", "Physics").build()));
     }
 
     @Test
@@ -70,22 +67,10 @@ public class SubjectContainsKeywordsPredicateTest {
         // Non-matching keyword
         predicate = new SubjectContainsKeywordsPredicate(Arrays.asList("Physics"));
         assertFalse(predicate.test(new PersonBuilder().withSubject("Math").build()));
-    }
 
-    @Test
-    public void test_subjectContainsKeywordsMatchAll_returnsCheck() {
-        // Match All: "Math" AND "Physics"
-        SubjectContainsKeywordsPredicate predicate =
-                new SubjectContainsKeywordsPredicate(Arrays.asList("Math", "Physics"), true);
-
-        // Matches both -> True
-        assertTrue(predicate.test(new PersonBuilder().withSubject("Math", "Physics").build()));
-
-        // Matches one -> False
-        assertFalse(predicate.test(new PersonBuilder().withSubject("Math", "Biology").build()));
-
-        // Matches neither -> False
-        assertFalse(predicate.test(new PersonBuilder().withSubject("Biology", "Chemistry").build()));
+        // Only one matching keyword
+        predicate = new SubjectContainsKeywordsPredicate(Arrays.asList("Math", "Biology"));
+        assertFalse(predicate.test(new PersonBuilder().withSubject("Math").build()));
     }
 
     @Test
@@ -94,8 +79,7 @@ public class SubjectContainsKeywordsPredicateTest {
         SubjectContainsKeywordsPredicate predicate = new SubjectContainsKeywordsPredicate(keywords);
 
         String expected = SubjectContainsKeywordsPredicate.class.getCanonicalName()
-                + "{keywords=" + keywords + ", isMatchAll=false}";
+                + "{keywords=" + keywords + "}";
         assertEquals(expected, predicate.toString());
     }
 }
-

@@ -12,36 +12,20 @@ import seedu.address.model.person.Person;
 
 /**
  * Tests that a {@code Person}'s {@code Tag}s matches given keywords.
- *
- * Supports two matching modes controlled by {@code isMatchAll}:
- * - If true, all keywords must match (AND semantics).
- * - If false, any keyword may match (OR semantics).
  */
 public class TagContainsKeywordsPredicate implements Predicate<Person> {
     private final List<String> keywords;
     private final List<String> normalizedKeywordsLower;
-    private final boolean isMatchAll;
 
     /**
      * Constructs a {@code TagContainsKeywordsPredicate}.
      *
      * @param keywords The list of keywords to search for (must not be null).
-     * @param isMatchAll If true, matches all keywords (AND logic). If false, matches any keyword (OR logic).
      */
-    public TagContainsKeywordsPredicate(List<String> keywords, boolean isMatchAll) {
+    public TagContainsKeywordsPredicate(List<String> keywords) {
         Objects.requireNonNull(keywords, "keywords must not be null");
         this.keywords = Collections.unmodifiableList(new ArrayList<>(keywords));
         this.normalizedKeywordsLower = normalizeKeywordsLower(this.keywords);
-        this.isMatchAll = isMatchAll;
-    }
-
-    /**
-     * Constructs a {@code TagContainsKeywordsPredicate} with default matching logic (OR).
-     *
-     * @param keywords The list of keywords to search for.
-     */
-    public TagContainsKeywordsPredicate(List<String> keywords) {
-        this(keywords, false);
     }
 
     /**
@@ -68,7 +52,7 @@ public class TagContainsKeywordsPredicate implements Predicate<Person> {
 
         List<String> personTagNamesLower = getPersonTagNamesLower(person);
 
-        return isMatchAll ? matchesAll(personTagNamesLower) : matchesAny(personTagNamesLower);
+        return matchesAll(personTagNamesLower);
     }
 
     private boolean isKeywordsEmpty() {
@@ -85,11 +69,6 @@ public class TagContainsKeywordsPredicate implements Predicate<Person> {
     private boolean matchesAll(List<String> personTagNamesLower) {
         return normalizedKeywordsLower.stream()
                 .allMatch(keywordLower -> hasTagMatchingKeywordLower(personTagNamesLower, keywordLower));
-    }
-
-    private boolean matchesAny(List<String> personTagNamesLower) {
-        return normalizedKeywordsLower.stream()
-                .anyMatch(keywordLower -> hasTagMatchingKeywordLower(personTagNamesLower, keywordLower));
     }
 
     private boolean hasTagMatchingKeywordLower(List<String> personTagNamesLower, String keywordLower) {
@@ -109,15 +88,13 @@ public class TagContainsKeywordsPredicate implements Predicate<Person> {
         }
 
         TagContainsKeywordsPredicate otherTagContainsKeywordsPredicate = (TagContainsKeywordsPredicate) other;
-        return keywords.equals(otherTagContainsKeywordsPredicate.keywords)
-                && isMatchAll == otherTagContainsKeywordsPredicate.isMatchAll;
+        return keywords.equals(otherTagContainsKeywordsPredicate.keywords);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .add("keywords", keywords)
-                .add("isMatchAll", isMatchAll)
                 .toString();
     }
 }

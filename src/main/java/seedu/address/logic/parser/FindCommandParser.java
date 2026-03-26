@@ -166,8 +166,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         }
 
         String[] nameKeywords = nameArgs.split("\\s+");
-        boolean isUniversalSearch = hasPreamble(argMultimap);
-        return new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords), isUniversalSearch);
+        return new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords));
     }
 
     /**
@@ -183,8 +182,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         List<String> subjectArgs = argMultimap.getAllValues(PREFIX_SUBJECT);
         List<String> normalizedSubjects = normalizeAndValidateSubjects(subjectArgs);
 
-        boolean isUniversalSearch = hasPreamble(argMultimap);
-        return new SubjectContainsKeywordsPredicate(normalizedSubjects, isUniversalSearch);
+        return new SubjectContainsKeywordsPredicate(normalizedSubjects);
     }
 
     private List<String> normalizeAndValidateSubjects(List<String> subjectArgs) throws ParseException {
@@ -240,8 +238,7 @@ public class FindCommandParser implements Parser<FindCommand> {
     private Predicate<Person> parseTagPredicate(ArgumentMultimap argMultimap) throws ParseException {
         List<String> tagArgs = argMultimap.getAllValues(PREFIX_TAG);
         List<String> normalizedTags = normalizeAndValidateTags(tagArgs);
-        boolean isUniversalSearch = hasPreamble(argMultimap);
-        return new TagContainsKeywordsPredicate(normalizedTags, isUniversalSearch);
+        return new TagContainsKeywordsPredicate(normalizedTags);
     }
 
     private List<String> normalizeAndValidateTags(List<String> tagArgs) throws ParseException {

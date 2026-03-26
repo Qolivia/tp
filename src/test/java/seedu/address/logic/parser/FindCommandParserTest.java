@@ -99,8 +99,9 @@ public class FindCommandParserTest {
 
     @Test
     public void parse_specificNameMultipleKeywords_returnsFindCommand() throws Exception {
-        FindCommand commandName = parser.parse(" n/Ali Bob");
-        assertMatch(commandName, personWithName("Alice Pauline"), personWithName("Bob Tan"));
+        FindCommand commandName = parser.parse(" n/Ali Paul");
+        assertMatch(commandName, personWithName("Alice Pauline"));
+        assertNoMatch(commandName, personWithName("Bob Tan"));
         assertNoMatch(commandName, personWithName("Charlie"));
     }
 
@@ -153,14 +154,14 @@ public class FindCommandParserTest {
     }
 
     @Test
-    public void parse_multipleSubjectsOrLogic() throws Exception {
+    public void parse_multipleSubjectsAndLogic() throws Exception {
         FindCommand commandSubject = parser.parse(" s/Bio s/Math");
-        assertMatch(commandSubject, personWithSubject("Biology"), personWithSubject("Math"));
-        assertNoMatch(commandSubject, personWithSubject("Physics"));
+        assertMatch(commandSubject, personWithSubjects("Biology", "Math"));
+        assertNoMatch(commandSubject, personWithSubject("Physics"), personWithSubject("Biology"));
     }
 
     @Test
-    public void parse_multipleTagsOrLogic() throws Exception {
+    public void parse_multipleTagsAndLogic() throws Exception {
         FindCommand commandTagPrefixes = parser.parse(" t/friend t/colleague");
         FindCommand commandTagTokens = parser.parse(" t/friend colleague");
 
@@ -170,8 +171,8 @@ public class FindCommandParserTest {
         Person other = personWithTags("stranger");
 
         for (FindCommand cmd : Arrays.asList(commandTagPrefixes, commandTagTokens)) {
-            assertMatch(cmd, friend, colleague, both);
-            assertNoMatch(cmd, other);
+            assertMatch(cmd, both);
+            assertNoMatch(cmd, friend, colleague, other);
         }
     }
 
@@ -232,6 +233,10 @@ public class FindCommandParserTest {
 
     private Person personWithSubject(String subject) {
         return new PersonBuilder().withSubject(subject).build();
+    }
+
+    private Person personWithSubjects(String... subjects) {
+        return new PersonBuilder().withSubject(subjects).build();
     }
 
     private Person personWithTags(String... tags) {

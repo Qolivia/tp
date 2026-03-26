@@ -75,16 +75,13 @@ public class FindCommandTest {
     }
 
     @Test
-    public void execute_multipleKeywords_multiplePersonsFound() {
+    public void execute_multipleKeywords_singlePersonFound() {
         // Construct expected message
-        List<Person> foundPersons = Arrays.asList(CARL, ELLE, FIONA);
+        List<Person> foundPersons = Arrays.asList(CARL);
         List<PersonIndexPair> expectedPairs = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
         sb.append(String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, foundPersons.size()));
 
-        // We know the typical address book structure, so we can hardcode or lookup indices
-        // CARL is index 3 (0-based 2), ELLE is 5 (4), FIONA is 6 (5) in TypicalPersons (based on name order?)
-        // Let's rely on model's list to be safe.
         List<Person> allPersons = expectedModel.getAddressBook().getPersonList();
         for (Person p : foundPersons) {
             int index = allPersons.indexOf(p) + 1;
@@ -95,7 +92,7 @@ public class FindCommandTest {
 
         CommandResult expectedCommandResult = new CommandResult(expectedMessage, expectedPairs);
 
-        NameContainsKeywordsPredicate predicate = preparePredicate("Kurz Elle Kunz");
+        NameContainsKeywordsPredicate predicate = preparePredicate("Carl Kurz");
         FindCommand command = new FindCommand(predicate);
         expectedModel.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 

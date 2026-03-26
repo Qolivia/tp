@@ -11,26 +11,14 @@ import seedu.address.commons.util.ToStringBuilder;
  */
 public class NameContainsKeywordsPredicate implements Predicate<Person> {
     private final List<String> keywords;
-    private final boolean isMatchAll;
 
     /**
      * Constructs a {@code NameContainsKeywordsPredicate}.
      *
      * @param keywords The list of keywords to search for.
-     * @param isMatchAll If true, matches all keywords (AND logic). If false, matches any keyword (OR logic).
-     */
-    public NameContainsKeywordsPredicate(List<String> keywords, boolean isMatchAll) {
-        this.keywords = keywords;
-        this.isMatchAll = isMatchAll;
-    }
-
-    /**
-     * Constructs a {@code NameContainsKeywordsPredicate} with default matching logic (OR).
-     *
-     * @param keywords The list of keywords to search for.
      */
     public NameContainsKeywordsPredicate(List<String> keywords) {
-        this(keywords, false);
+        this.keywords = keywords;
     }
 
     @Override
@@ -42,7 +30,7 @@ public class NameContainsKeywordsPredicate implements Predicate<Person> {
 
         String fullName = getPersonFullName(person);
 
-        return isMatchAll ? matchesAll(fullName) : matchesAny(fullName);
+        return matchesAll(fullName);
     }
 
     private boolean isKeywordsEmpty() {
@@ -56,11 +44,6 @@ public class NameContainsKeywordsPredicate implements Predicate<Person> {
     private boolean matchesAll(String fullName) {
         return keywords.stream()
                 .allMatch(keyword -> matchesKeyword(fullName, keyword));
-    }
-
-    private boolean matchesAny(String fullName) {
-        return keywords.stream()
-                .anyMatch(keyword -> matchesKeyword(fullName, keyword));
     }
 
     private boolean matchesKeyword(String fullName, String keyword) {
@@ -79,15 +62,13 @@ public class NameContainsKeywordsPredicate implements Predicate<Person> {
         }
 
         NameContainsKeywordsPredicate otherNameContainsKeywordsPredicate = (NameContainsKeywordsPredicate) other;
-        return keywords.equals(otherNameContainsKeywordsPredicate.keywords)
-                && isMatchAll == otherNameContainsKeywordsPredicate.isMatchAll;
+        return keywords.equals(otherNameContainsKeywordsPredicate.keywords);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .add("keywords", keywords)
-                .add("isMatchAll", isMatchAll)
                 .toString();
     }
 }
