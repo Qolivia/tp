@@ -50,9 +50,9 @@ public class FindCommand extends Command {
     public CommandResult execute(Model model) {
         requireNonNull(model);
         model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
-        ObservableList<Person> allPersons = model.getAddressBook().getPersonList();
-        List<Person> foundPersons = getFoundPersons(allPersons);
-        List<PersonIndexPair> foundPersonIndices = getPersonIndices(foundPersons, allPersons);
+        ObservableList<Person> displayedPersons = model.getFilteredPersonList();
+        List<Person> foundPersons = getFoundPersons(displayedPersons);
+        List<PersonIndexPair> foundPersonIndices = getPersonIndices(foundPersons, displayedPersons);
         String resultMessage = buildResultMessage(foundPersonIndices);
 
         return new CommandResult(resultMessage, foundPersonIndices);

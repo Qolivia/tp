@@ -18,22 +18,31 @@ This guide is written for parents who are comfortable using a keyboard and want 
 ---
 ## Table of Contents
 
-* [Quick Start](#quick-start)
-* [Understanding the Interface](#understanding-the-interface)
-* [Features](#features)
-    * [Viewing Help](#viewing-help-help)
-    * [Adding a Tutor](#adding-a-tutor-add)
-    * [Listing All Tutors](#listing-all-tutors-list)
-    * [Editing a Tutor Profile](#editing-a-tutor-profile-edit)
-    * [Finding Tutors](#finding-tutors-find)
-    * [Deleting a Tutor](#deleting-a-tutor-delete)
-    * [Clearing All Tutors](#clearing-all-tutors-clear)
-    * [Exiting Tuto](#exiting-tuto-exit)
-    * [Saving Your Data](#saving-your-data)
-    * [Editing the Data File Directly](#editing-the-data-file-directly)
-* [FAQ](#faq)
-* [Known Issues](#known-issues)
-* [Command Summary](#command-summary)
+- [Tuto User Guide](#tuto-user-guide)
+  - [Table of Contents](#table-of-contents)
+  - [Quick Start](#quick-start)
+    - [Step 1 — Install Java](#step-1--install-java)
+    - [Step 2 — Download Tuto](#step-2--download-tuto)
+    - [Step 3 — Launch Tuto](#step-3--launch-tuto)
+    - [Step 4 — Try Your First Commands](#step-4--try-your-first-commands)
+  - [Understanding the Interface](#understanding-the-interface)
+  - [Features](#features)
+    - [Notes on Command Format](#notes-on-command-format)
+    - [Viewing Help : `help`](#viewing-help--help)
+    - [Clearing all entries: `clear`](#clearing-all-entries-clear)
+    - [Adding a Tutor : `add`](#adding-a-tutor--add)
+    - [Listing All Tutors : `list`](#listing-all-tutors--list)
+    - [Sorting the Tutor List : `sort`](#sorting-the-tutor-list--sort)
+    - [Editing a Tutor Profile : `edit`](#editing-a-tutor-profile--edit)
+    - [Finding Tutors : `find`](#finding-tutors--find)
+    - [Deleting a Tutor : `delete`](#deleting-a-tutor--delete)
+    - [Exiting the program : `exit`](#exiting-the-program--exit)
+    - [Saving Your Data](#saving-your-data)
+  - [](#)
+    - [Editing the Data File Directly](#editing-the-data-file-directly)
+  - [FAQ](#faq)
+  - [Known Issues](#known-issues)
+  - [Command Summary](#command-summary)
 ---
 
 ## Quick Start
@@ -86,6 +95,7 @@ Type a command into the **Command Box** at the top and press **Enter** to run it
 | View all tutors | `list` |
 | Add a new tutor | `add n/Jane Smith p/91234567 e/jane@example.com s/Mathematics r/60` |
 | Find tutors by subject | `find s/Mathematics` |
+| Sort tutors by name (A–Z) | `sort name asc` |
 | Delete the 1st tutor | `delete 1` |
 | Open help | `help` |
 | Exit the app | `exit` |
@@ -138,6 +148,19 @@ The following conventions apply to all commands in this guide:
 <box type="warning" seamless>
 
 **Note for PDF users:** If you copy commands from a PDF, line breaks may introduce unexpected spaces. Re-type the command manually if it does not execute as expected.
+
+</box>
+
+<box type="warning" seamless>
+
+**Displayed indices change after `sort` and `delete`**
+
+Commands such as `edit` and `delete` use **`INDEX`**: the number shown beside each tutor in the **Tutor List Panel** for the **current** list order.
+
+* After a **`sort`** command, tutors are reordered, so the same person may appear at a **different** index than before.
+* After a **`delete`** command, the list becomes shorter and tutors below the removed row **shift up**, so their indices are **renumbered** (what was “tutor 5” may become “tutor 4”).
+
+**Always look at the Tutor List Panel again** before typing the next `edit` or `delete` command. Do not assume indices from an earlier step are still correct.
 
 </box>
 
@@ -217,6 +240,63 @@ New person added: John Doe; Phone: 98765432; Email: johnd@example.com; Address: 
 
 ---
 
+### Listing All Tutors : `list`
+
+Displays all tutor profiles stored in Tuto.
+
+![list message](images/listMessage.png)
+
+**Format:** `list`
+
+**Expected output:** The Tutor List Panel refreshes to show all contacts. The Result Display shows the total number of tutors listed.
+
+<box type="tip" seamless>
+
+**Tip:** Use `list` to reset the view after a `find` command has filtered your results.
+
+</box>
+
+---
+
+### Sorting the Tutor List : `sort`
+
+Changes the **order** of tutors in the Tutor List Panel. Sorting is by **name** or **hourly rate** only; it does not remove or hide tutors.
+
+**Format:**
+```
+sort FIELD ORDER
+```
+
+| Part | Meaning | Allowed values |
+|---|---|---|
+| `FIELD` | What to sort by | `name` or `rate` (case-insensitive) |
+| `ORDER` | Sort direction | `asc` (ascending) or `desc` (descending) (case-insensitive) |
+
+* **Name:** Alphabetical order by full name (case-insensitive).
+* **Rate:** Numeric order by hourly rate. If two tutors have the **same rate**, they are ordered by **name** (ascending) as a tie-break.
+
+**Examples:**
+
+```
+sort name asc
+```
+Shows tutors from A → Z by name.
+
+```
+sort rate desc
+```
+Shows highest hourly rate first.
+
+**Expected output:** A confirmation message in the Result Display, and the Tutor List Panel updates to the new order. The header above the list also reflects the active sort.
+
+<box type="warning" seamless>
+
+**Indices update after sorting:** Because `edit` and `delete` use the position number in the **current** list, running `sort` changes which tutor is at each index. See [Displayed indices change after `sort` and `delete`](#notes-on-command-format) before your next command.
+
+</box>
+
+---
+
 ### Editing a Tutor Profile : `edit`
 
 Updates one or more fields of an existing tutor profile.
@@ -227,6 +307,7 @@ edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [s/SUBJECT] [r/RATE] [t/TAG]
 ```
 
 * `INDEX` refers to the number shown next to the tutor in the current list. It must be a **positive integer** (1, 2, 3 …).
+* After a **`sort`** or **`delete`**, indices may no longer match what you saw earlier — see [Displayed indices change after `sort` and `delete`](#notes-on-command-format).
 * At least one field must be provided.
 * Existing values are replaced with the new values you provide.
 
@@ -259,34 +340,29 @@ Edited Person: John Doe; Phone: 91234567; Email: johndoe@example.com; Address: ;
 ```
 
 ---
-### Listing All Tutors : `list`
-
-Displays all tutor profiles stored in Tuto.
-
-![list message](images/listMessage.png)
-
-**Format:** `list`
-
----
 ### Finding Tutors : `find`
 
-Searches for tutors by name, subject, or hourly rate.
+Searches for tutors by name, subject, or hourly rate. Can combine prefixes (`n/`, `s/`, `r/`) in one command.
 
-**Format:**
-```
-find n/NAME_KEYWORD [MORE_NAME_KEYWORDS]
-find s/SUBJECT
-find r/RATE
-```
+| Prefix | Description | Behaviour                                                                                                               | Example                                          |
+|--------|------------|-------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------|
+| `n/NAME_KEYWORD [MORE_NAME_KEYWORDS]` (Name) | Search by tutor name | - Multiple keywords allowed (space-separated)<br>- Case-insensitive<br>- Prefix matching<br>- Only **one `n/` allowed** | `find n/Hans` |
+| `s/SUBJECT` (Subject) | Search by subject taught | - Multiple `s/` prefixes allowed<br>- Case-insensitive<br>- Prefix matching<br>                                         | `find s/math s/science`                          |
+| `r/RATE` (Rate) | Search by hourly rate | - Matches **exact rate**<br>- Only **one `r/` allowed**                                                                 | `find r/50`                                      |
 
-* Only **one search prefix** (`n/`, `s/`, or `r/`) can be used per command.
-* Name searches are **case-insensitive** and match full words only.<br>
-  e.g. `find n/Hans` will match `Hans Gruber` but not `Hansen`.
-* Multiple name keywords return tutors matching **any** of the keywords (OR logic).<br>
-  e.g. `find n/Hans Bo` returns all tutors named Hans or Bo.
-* Subject searches return tutors whose subject matches exactly (case-insensitive).
-* Rate searches return tutors whose rate matches exactly.
-* Spaces after the prefix are optional: `find n/John` and `find n/ John` both work.
+- Name and subject searches support **prefix-based matching**
+  - e.g. `find n/Han` matches "Hans"
+  - e.g. `find s/Mat` matches "Math", "Mathematics"
+- Multiple name keywords return tutors matching any of the keywords (OR logic). 
+  - e.g. `find n/Han Bo` returns all tutors with names starting with "Han" or "Bo" (e.g. "Hans", "Bo").
+- Multiple subject prefixes return tutors matching any of the keywords (OR logic).
+  - e.g. `find s/Math s/Chemistry` returns all tutors with subject Math or Chemistry.
+- Spaces after prefixes are optional (`find n/John` and `find n/ John` both work)
+- When different prefixes are used together, tutors must match **all conditions**  
+  (e.g. `find n/Alex r/40 s/Math` returns tutors named Alex, charging 40, and teaching Math)
+- **Invalid usage**
+  - Multiple `r/` → ❌ `find r/16 r/17`
+  - Multiple `n/` → ❌ `find n/Alice n/Bob`
 
 <box type="tip" seamless>
 
@@ -294,34 +370,34 @@ find r/RATE
 
 </box>
 
+---
 **Examples:**
 
-```
-find n/John
-```
-Returns all tutors with "John" in their name, e.g. `John Doe`, `John Tan`.
+`find n/John`  
+Returns all tutors with "John" in their name.
 
-```
-find s/Mathematics
-```
-Returns all tutors who teach Mathematics.
+`find s/Math`  
+Returns tutors who teach Math.
 
-```
-find r/50
-```
-Returns all tutors charging exactly $50/hr.
+`find s/Math s/Chemistry`  
+Returns tutors who teach Math **OR** Chemistry.
 
-```
-find n/Alex David
-```
-Returns tutors named Alex or David.
+`find r/50`  
+Returns tutors charging exactly $50/hr.
+
+`find n/Alex r/40 s/Physics`  
+Returns tutors named Alex, charging $40, **AND** teaching Physics.
 
 ![Result for 'find n/alex david'](images/findAlexDavidResult.png)
 
 **Expected output:**
+If there are matching tutors, it will show only matching tutors on the right panel. 
+
+Else, will display:
 ```
-2 persons listed!
+0 persons listed!
 ```
+
 
 ---
 
@@ -334,6 +410,7 @@ Permanently removes a tutor profile from Tuto.
 Format: `delete INDEX`
 
 * `INDEX` must be a **positive integer** matching a tutor's position in the currently displayed list.
+* After you delete someone, **every tutor below that row moves up** and gets a new index. After a **`sort`**, positions change too. See [Displayed indices change after `sort` and `delete`](#notes-on-command-format).
 
 <box type="warning" seamless>
 
@@ -415,13 +492,14 @@ A: The Help Window may be minimised. Check your taskbar and restore it manually.
 
 ## Command Summary
 
-| Action | Format | Example                                                                                                            |
-|---|---|--------------------------------------------------------------------------------------------------------------------|
-| **Help** | `help` | `help`                                                                                                             |
-| **Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL s/SUBJECT1 s/SUBJECT2 ... s/SUBJECTn r/RATE [a/ADDRESS] [t/TAG]…​` |  `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 s/Biology r/45 t/friend t/colleague` |
-| **List** | `list` | `list`                                                                                                             |
-| **Edit** | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [s/SUBJECT] [r/RATE] [t/TAG]…` | `edit 2 n/James Lee e/james@example.com`                                                                           |
-| **Find** | `find n/KEYWORD [MORE_KEYWORDS]` \| `find s/SUBJECT` \| `find r/RATE` | `find n/James`, `find s/Biology`, `find r/45`                                                                      |
-| **Delete** | `delete INDEX` | `delete 3`                                                                                                         |
-| **Clear** | `clear` | `clear`                                                                                                            |
-| **Exit** | `exit` | `exit`                                                                                                             |
+| Action | Format | Example |
+|---|---|---|
+| **Help** | `help` | `help` |
+| **Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL s/SUBJECT1 s/SUBJECT2 ... s/SUBJECTn r/RATE [a/ADDRESS] [t/TAG]…​` | `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 s/Biology r/45 t/friend t/colleague` |
+| **List** | `list` | `list` |
+| **Sort** | `sort FIELD ORDER` | `sort name asc`, `sort rate desc` |
+| **Edit** | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [s/SUBJECT] [r/RATE] [t/TAG]…` | `edit 2 n/James Lee e/james@example.com` |
+| **Find** | `find n/KEYWORD [MORE_KEYWORDS]` \| `find s/SUBJECT` \| `find r/RATE` | `find n/James`, `find s/Biology`, `find r/45` |
+| **Delete** | `delete INDEX` | `delete 3` |
+| **Clear** | `clear` | `clear` |
+| **Exit** | `exit` | `exit` |
