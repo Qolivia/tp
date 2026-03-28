@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -91,33 +92,44 @@ public class FindCommandParser implements Parser<FindCommand> {
     }
 
     private String buildFindDescription(ArgumentMultimap argMultimap) {
-        String preamble = argMultimap.getPreamble().trim();
+        List<String> parts = new ArrayList<>();
 
+        String preamble = argMultimap.getPreamble().trim();
         if (!preamble.isEmpty()) {
-            return "Find results for universal search: '" + preamble + "'";
+            parts.add("universal search: '" + preamble + "'");
         }
 
         if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
             String nameValue = argMultimap.getValue(PREFIX_NAME).get().trim();
-            return "Find results for name: '" + nameValue + "'";
+            parts.add("name: '" + nameValue + "'");
         }
 
         if (!argMultimap.getAllValues(PREFIX_SUBJECT).isEmpty()) {
-            String subjectValue = String.join(", ", argMultimap.getAllValues(PREFIX_SUBJECT));
-            return "Find results for subject: '" + subjectValue + "'";
+            String subjectValue = String.join(", ",
+                    argMultimap.getAllValues(PREFIX_SUBJECT).stream()
+                            .map(String::trim)
+                            .toList());
+            parts.add("subject: '" + subjectValue + "'");
         }
 
         if (argMultimap.getValue(PREFIX_RATE).isPresent()) {
             String rateValue = argMultimap.getValue(PREFIX_RATE).get().trim();
-            return "Find results for hourly payment rate: '" + rateValue + "'";
+            parts.add("hourly payment rate: '" + rateValue + "'");
         }
 
         if (!argMultimap.getAllValues(PREFIX_TAG).isEmpty()) {
-            String tagValue = String.join(", ", argMultimap.getAllValues(PREFIX_TAG));
-            return "This is your find result for tag: '" + tagValue + "'";
+            String tagValue = String.join(", ",
+                    argMultimap.getAllValues(PREFIX_TAG).stream()
+                            .map(String::trim)
+                            .toList());
+            parts.add("tag: '" + tagValue + "'");
         }
 
-        return "";
+        if (parts.isEmpty()) {
+            return "";
+        }
+
+        return String.join(", ", parts);
     }
 
     private ArgumentMultimap tokenizeAndValidate(String args) throws ParseException {
