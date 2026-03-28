@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.logic.Messages;
 import seedu.address.logic.commands.CommandResult.PersonIndexPair;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
