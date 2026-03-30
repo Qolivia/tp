@@ -93,16 +93,30 @@ public class FindCommandParser implements Parser<FindCommand> {
     private String buildFindDescription(ArgumentMultimap argMultimap) {
         List<String> parts = new ArrayList<>();
 
+        addUniversalPart(argMultimap, parts);
+        addNamePart(argMultimap, parts);
+        addSubjectPart(argMultimap, parts);
+        addRatePart(argMultimap, parts);
+        addTagPart(argMultimap, parts);
+
+        return parts.isEmpty() ? "" : String.join(", ", parts);
+    }
+
+    private void addUniversalPart(ArgumentMultimap argMultimap, List<String> parts) {
         String preamble = argMultimap.getPreamble().trim();
         if (!preamble.isEmpty()) {
             parts.add("universal search: '" + preamble + "'");
         }
+    }
 
+    private void addNamePart(ArgumentMultimap argMultimap, List<String> parts) {
         if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
             String nameValue = argMultimap.getValue(PREFIX_NAME).get().trim();
             parts.add("name: '" + nameValue + "'");
         }
+    }
 
+    private void addSubjectPart(ArgumentMultimap argMultimap, List<String> parts) {
         if (!argMultimap.getAllValues(PREFIX_SUBJECT).isEmpty()) {
             String subjectValue = String.join(", ",
                     argMultimap.getAllValues(PREFIX_SUBJECT).stream()
@@ -110,12 +124,16 @@ public class FindCommandParser implements Parser<FindCommand> {
                             .toList());
             parts.add("subject: '" + subjectValue + "'");
         }
+    }
 
+    private void addRatePart(ArgumentMultimap argMultimap, List<String> parts) {
         if (argMultimap.getValue(PREFIX_RATE).isPresent()) {
             String rateValue = argMultimap.getValue(PREFIX_RATE).get().trim();
             parts.add("hourly payment rate: '" + rateValue + "'");
         }
+    }
 
+    private void addTagPart(ArgumentMultimap argMultimap, List<String> parts) {
         if (!argMultimap.getAllValues(PREFIX_TAG).isEmpty()) {
             String tagValue = String.join(", ",
                     argMultimap.getAllValues(PREFIX_TAG).stream()
@@ -123,12 +141,6 @@ public class FindCommandParser implements Parser<FindCommand> {
                             .toList());
             parts.add("tag: '" + tagValue + "'");
         }
-
-        if (parts.isEmpty()) {
-            return "";
-        }
-
-        return String.join(", ", parts);
     }
 
     private ArgumentMultimap tokenizeAndValidate(String args) throws ParseException {

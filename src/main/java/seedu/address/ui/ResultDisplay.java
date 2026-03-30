@@ -48,10 +48,7 @@ public class ResultDisplay extends UiPart<Region> {
         resultListView.setVisible(false);
         resultListView.getItems().clear();
 
-        if (resultDescriptionDisplay != null) {
-            resultDescriptionDisplay.setText("");
-            resultDescriptionDisplay.setVisible(false);
-        }
+        updateDescriptionDisplay("");
     }
 
     /**
@@ -66,15 +63,16 @@ public class ResultDisplay extends UiPart<Region> {
         resultDisplay.setVisible(false);
         resultDisplay.setText("");
 
-        if (resultDescriptionDisplay != null) {
-            if (description != null && !description.isEmpty()) {
-                resultDescriptionDisplay.setText(description);
-                resultDescriptionDisplay.setVisible(true);
-            } else {
-                resultDescriptionDisplay.setText("");
-                resultDescriptionDisplay.setVisible(false);
-            }
+        updateDescriptionDisplay(description);
+    }
+
+    private void updateDescriptionDisplay(String description) {
+        if (resultDescriptionDisplay == null) {
+            return;
         }
+        boolean hasDescription = description != null && !description.isEmpty();
+        resultDescriptionDisplay.setText(hasDescription ? description : "");
+        resultDescriptionDisplay.setVisible(hasDescription);
     }
 
     /**
