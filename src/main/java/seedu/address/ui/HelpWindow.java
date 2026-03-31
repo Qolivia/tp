@@ -16,7 +16,15 @@ import seedu.address.commons.core.LogsCenter;
 public class HelpWindow extends UiPart<Stage> {
 
     public static final String USERGUIDE_URL = "https://ay2526s2-cs2103t-t15-3.github.io/tp/";
-    public static final String HELP_MESSAGE = "Refer to the user guide: " + USERGUIDE_URL;
+    public static final String HELP_MESSAGE = "Refer to the user guide: " + USERGUIDE_URL + "\n\n"
+            + "Some Important Constraints:\n"
+            + "Names should only contain alphanumeric characters and spaces.\n"
+            + "Phone numbers should only contain numbers, and it should be at least 3 digits long.\n"
+            + "Emails should be of the format local-part@domain and adhere to standard constraints.\n"
+            + "Addresses can take any values.\n"
+            + "Rates should only contain numbers, and it should not be blank.\n"
+            + "Subjects should only contain alphabetical characters and spaces, and it should not be blank.\n"
+            + "Tags names should be alphanumeric.";
 
     private static final Logger logger = LogsCenter.getLogger(HelpWindow.class);
     private static final String FXML = "HelpWindow.fxml";
