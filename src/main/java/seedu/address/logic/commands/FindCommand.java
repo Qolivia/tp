@@ -85,6 +85,13 @@ public class FindCommand extends Command {
         return String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, pairs.size());
     }
 
+    private String buildResultDescription() {
+        if (findDescription == null || findDescription.isEmpty()) {
+            return "";
+        }
+        return "Find results for:\n" + findDescription;
+    }
+
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
@@ -92,12 +99,9 @@ public class FindCommand extends Command {
         ObservableList<Person> displayedPersons = model.getFilteredPersonList();
         List<Person> foundPersons = getFoundPersons(displayedPersons);
         List<PersonIndexPair> foundPersonIndices = getPersonIndices(foundPersons, displayedPersons);
-        String countMessage = buildResultCount(foundPersonIndices);
 
-        String description = "";
-        if (findDescription != null && !findDescription.isEmpty()) {
-            description = "Find results for:\n" + findDescription;
-        }
+        String countMessage = buildResultCount(foundPersonIndices);
+        String description = buildResultDescription();
 
         return new CommandResult(countMessage, foundPersonIndices, description);
     }

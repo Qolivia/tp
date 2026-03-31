@@ -57,20 +57,35 @@ public class ResultDisplay extends UiPart<Region> {
      */
     public void setPersonList(List<PersonIndexPair> persons, String description) {
         requireNonNull(persons);
-        resultDisplay.setVisible(false);
+
+        hideFeedbackTextArea();
+        showResultListContainer();
+
         updateDescriptionDisplay(description);
-        
+        updatePersonList(persons);
+    }
+
+    private void hideFeedbackTextArea() {
+        resultDisplay.setVisible(false);
+    }
+
+    private void showResultListContainer() {
+        resultListContainer.setVisible(true);
+    }
+
+    private void updatePersonList(List<PersonIndexPair> persons) {
         resultListView.setItems(FXCollections.observableArrayList(persons));
-        
-        if (persons.isEmpty()) {
+        updatePlaceholder(persons.isEmpty());
+    }
+
+    private void updatePlaceholder(boolean isEmpty) {
+        if (isEmpty) {
             Label placeholder = new Label("No tutors found.");
             placeholder.setStyle("-fx-text-fill: grey; -fx-alignment: center; -fx-padding: 20;");
             resultListView.setPlaceholder(placeholder);
         } else {
             resultListView.setPlaceholder(null);
         }
-        
-        resultListContainer.setVisible(true);
     }
 
     private void updateDescriptionDisplay(String description) {
