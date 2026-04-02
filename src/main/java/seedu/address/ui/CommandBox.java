@@ -108,7 +108,7 @@ public class CommandBox extends UiPart<Region> {
     private String getFormattedTextContent() {
         String content = commandTextField.getText();
         if (content == null || content.isEmpty()) {
-            return " "; // use a placeholder to calculate minimum heigh
+            return " "; // use a placeholder to calculate minimum height
         } else if (content.endsWith("\n")) {
             return content + " "; // so that trailing newlines are accounted for by Text bounds
         }
