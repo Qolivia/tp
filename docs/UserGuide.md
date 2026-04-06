@@ -566,7 +566,7 @@ Deleted Person: Betsy Crowe; Phone: 1234567; Email: betsycrowe@example.com; Addr
 
 ### Saving Your Data
 
-Tuto's data are saved automatically as a JSON file `[JAR file location]/data/Tuto.json`. Advanced users are welcome to update data directly by editing that data file.
+Tuto's data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
 
 <box type="warning" seamless>
 
