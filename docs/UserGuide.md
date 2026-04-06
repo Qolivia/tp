@@ -94,7 +94,7 @@ A window similar to the one below should appear within a few seconds, pre-loaded
 
 ### Step 4 — Try Your First Commands
 
-Type a command into the **Command Box** at the top and press **Enter** to run it. Here are a few to try:
+Type a command into the **Command Box** at the bottom and press **Enter** to run it. Here are a few to try:
 
 | What you want to do       | Command to type                                                     |
 | ------------------------- | ------------------------------------------------------------------- |
@@ -186,7 +186,7 @@ Opens a link to this User Guide.
 
 ### Clearing all entries: `clear`
 
-Clears all entries from the address book.
+Clears all entries from Tuto.
 
 ![clear message](images/clearMessage.png)
 
