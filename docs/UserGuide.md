@@ -27,10 +27,11 @@ This guide is written for parents who are comfortable using a keyboard and want 
     - [Step 3 — Launch Tuto](#step-3--launch-tuto)
     - [Step 4 — Try Your First Commands](#step-4--try-your-first-commands)
   - [Understanding the Interface](#understanding-the-interface)
-  - [Features](#features)
+  - [Command Basics](#command-basics)
     - [Notes on Command Format](#notes-on-command-format)
     - [Understanding List Indices](#understanding-list-indices)
     - [Duplicate Tutors are Not Allowed](#duplicate-tutors-are-not-allowed)
+  - [Commands](#commands)
     - [Viewing Help : `help`](#viewing-help-help)
     - [Adding a Tutor : `add`](#adding-a-tutor-add)
     - [Editing a Tutor Profile : `edit`](#editing-a-tutor-profile-edit)
@@ -43,8 +44,9 @@ This guide is written for parents who are comfortable using a keyboard and want 
       - [Invalid Usage](#invalid-usage)
     - [Sorting the Tutor List : `sort`](#sorting-the-tutor-list-sort)
     - [Listing All Tutors : `list`](#listing-all-tutors-list)
-    - [Clearing all entries: `clear`](#clearing-all-entries-clear)
+    - [Clearing All Entries : `clear`](#clearing-all-entries-clear)
     - [Exiting the Program : `exit`](#exiting-the-program-exit)
+  - [Data Management](#data-management)
     - [Saving Your Data](#saving-your-data)
     - [Editing the Data File Directly](#editing-the-data-file-directly)
   - [FAQ](#faq)
@@ -128,7 +130,7 @@ Each tutor card in the panel shows the tutor's name, phone number, email, subjec
 
 ---
 
-## Features
+## Command Basics
 
 ### Notes on Command Format
 
@@ -189,6 +191,8 @@ Tuto considers a Tutor Profile to be a duplicate if it shares the exact same **P
 </box>
 
 ---
+
+## Commands
 
 ### Viewing Help : `help`
 
@@ -345,9 +349,13 @@ Changes the 1st tutor's subject to Physics and rate to $30/hr.
 
 Permanently removes a Tutor Profile from Tuto.
 
-![delete message](images/deleteMessage.png)
+![Delete command hero image](images/deleteMessage.png)
 
 **Format:** `delete INDEX`
+
+---
+
+#### Parameters
 
 - `INDEX` must be a **positive integer** matching a tutor's position in the currently displayed list.
 - After you delete someone, **every tutor below that row moves up** and gets a new index. After a **`sort`**, positions change too. See [Understanding List Indices](#understanding-list-indices).
@@ -358,27 +366,30 @@ Permanently removes a Tutor Profile from Tuto.
 
 </box>
 
-**Examples:**
+---
+
+#### Examples
+
+**Deleting from the full list**
 
 ```
-list
 delete 2
 ```
 
-Deletes the 2nd tutor in the full list.
+Deletes the Tutor profile with index 2.
+
+**Deleting from search results**
 
 ```
 find s/Biology
 delete 1
 ```
 
-Deletes the 1st tutor returned in the Biology search results.
+Deletes the Tutor Profile with index 1
 
 **Expected output:**
 
-```
-Deleted Person: Betsy Crowe; Phone: 1234567; Email: betsycrowe@example.com; Address: Newgate Prison; Subject: Biology; Rate: 55; Tags: [experienced][recommended]
-```
+![Find message](images/delete_success.png)
 
 ---
 
@@ -530,16 +541,20 @@ Matching tutors appear in the right panel. If no matches are found:
 
 Only **one** `n/` and one `r/` are allowed per command.
 
-| ❌ Invalid           | Reason                    |
-| -------------------- | ------------------------- |
-| `find r/16 r/17`     | Multiple `r/` not allowed |
-| `find n/Alice n/Bob` | Multiple `n/` not allowed |
+| ❌ Invalid            | Reason                            |
+|----------------------|-----------------------------------|
+| `find r/16 r/17`     | Multiple `r/` not allowed         |
+| `find n/Alice n/Bob` | Multiple `n/` not allowed         |
+| `find`               | Keywords and/or Prefixes required |
 
 </box>
 
 ![Invalid Rates](images/find_invalid_rate.png)
 
 ![Invalid Names](images/find_invalid_name.png)
+
+![Invalid Command](images/find_generic_error.png)
+
 
 
 ---
@@ -548,11 +563,13 @@ Only **one** `n/` and one `r/` are allowed per command.
 
 Changes the **order** of tutors in the Tutor List Panel. Sorting is by **name** or **hourly rate** only; it does not remove or hide tutors.
 
-**Format:**
+![Sort command hero image](images/sort_hero.png)
 
-```
-sort FIELD ORDER
-```
+**Format:** `sort FIELD ORDER`
+
+---
+
+#### Parameters
 
 | Part    | Meaning         | Allowed values                                              |
 | ------- | --------------- | ----------------------------------------------------------- |
@@ -562,13 +579,19 @@ sort FIELD ORDER
 - **Name:** Alphabetical order by full name (case-insensitive).
 - **Rate:** Numeric order by hourly rate. If two tutors have the **same rate**, they are ordered by **name** (ascending) as a tie-break.
 
-**Examples:**
+---
+
+#### Examples
+
+**Sorting by name**
 
 ```
 sort name asc
 ```
 
-Shows tutors from A → Z by name.
+Shows tutors in alphabetical order from A → Z by name.
+
+**Sorting by rate**
 
 ```
 sort rate desc
@@ -578,11 +601,24 @@ Shows highest hourly rate first.
 
 **Expected output:** A confirmation message in the Result Display, and the Tutor List Panel updates to the new order. The header above the list also reflects the active sort.
 
+![Sort successful output](images/sort_successful.png)
+
 <box type="warning" seamless>
 
 **Indices update after sorting:** Because `edit` and `delete` use the position number in the **current** list, running `sort` changes which tutor is at each index. See [Understanding List Indices](#understanding-list-indices) before your next command.
 
 </box>
+
+---
+
+#### Invalid Usage
+
+**Error Output:**
+
+![Sort error output](images/sort_error.png)
+
+![Sort error output](images/sort_no_param.png)
+
 
 ---
 
@@ -631,6 +667,8 @@ Closes the Tuto application.
 When `exit` executes successfully, Tuto closes. Tutor data is saved automatically as part of command execution.
 
 ---
+
+## Data Management
 
 ### Saving Your Data
 
