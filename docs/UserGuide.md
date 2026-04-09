@@ -20,50 +20,50 @@ This guide is written for parents who are comfortable using a keyboard and want 
 ## Table of Contents
 
 - [Tuto User Guide](#tuto-user-guide)
-    - [Table of Contents](#table-of-contents)
-    - [Quick Start](#quick-start)
-        - [Step 1 — Install Java](#step-1--install-java)
-        - [Step 2 — Download Tuto](#step-2--download-tuto)
-        - [Step 3 — Launch Tuto](#step-3--launch-tuto)
-        - [Step 4 — Try Your First Commands](#step-4--try-your-first-commands)
-    - [Understanding the Interface](#understanding-the-interface)
-    - [Command Basics](#command-basics)
-        - [Notes on Command Format](#notes-on-command-format)
-        - [Understanding List Indices](#understanding-list-indices)
-        - [Duplicate Tutors are Not Allowed](#duplicate-tutors-are-not-allowed)
-    - [Commands](#commands)
-        - [Viewing Help : `help`](#viewing-help--help)
-        - [Adding a Tutor : `add`](#adding-a-tutor--add)
-            - [Parameters](#parameters)
-            - [Constraints](#constraints)
-            - [Examples](#examples)
-        - [Editing a Tutor Profile : `edit`](#editing-a-tutor-profile--edit)
-            - [Parameters](#parameters-1)
-            - [Constraints](#constraints-1)
-            - [Examples](#examples-1)
-            - [Invalid Usage](#invalid-usage)
-        - [Deleting a Tutor : `delete`](#deleting-a-tutor--delete)
-            - [Parameters](#parameters-2)
-            - [Examples](#examples-2)
-        - [Finding Tutors : `find`](#finding-tutors--find)
-            - [Prefixes](#prefixes)
-            - [Search Modes](#search-modes)
-            - [How Matching Works](#how-matching-works)
-            - [Examples](#examples-3)
-            - [Invalid Usage](#invalid-usage-1)
-        - [Sorting the Tutor List : `sort`](#sorting-the-tutor-list--sort)
-            - [Parameters](#parameters-3)
-            - [Examples](#examples-4)
-            - [Invalid Usage](#invalid-usage-2)
-        - [Listing All Tutors : `list`](#listing-all-tutors--list)
-        - [Clearing All Entries : `clear`](#clearing-all-entries--clear)
-        - [Exiting the Program : `exit`](#exiting-the-program--exit)
-    - [Data Management](#data-management)
-        - [Saving Your Data](#saving-your-data)
-        - [Editing the Data File Directly](#editing-the-data-file-directly)
-    - [FAQ](#faq)
-    - [Known Issues](#known-issues)
-    - [Command Summary](#command-summary)
+  - [Table of Contents](#table-of-contents)
+  - [Quick Start](#quick-start)
+    - [Step 1 — Install Java](#step-1--install-java)
+    - [Step 2 — Download Tuto](#step-2--download-tuto)
+    - [Step 3 — Launch Tuto](#step-3--launch-tuto)
+    - [Step 4 — Try Your First Commands](#step-4--try-your-first-commands)
+  - [Understanding the Interface](#understanding-the-interface)
+  - [Command Basics](#command-basics)
+    - [Notes on Command Format](#notes-on-command-format)
+    - [Understanding List Indices](#understanding-list-indices)
+    - [Duplicate Tutors are Not Allowed](#duplicate-tutors-are-not-allowed)
+  - [Commands](#commands)
+    - [Viewing Help : `help`](#viewing-help--help)
+    - [Adding a Tutor : `add`](#adding-a-tutor--add)
+      - [Parameters](#parameters)
+      - [Constraints](#constraints)
+      - [Examples](#examples)
+    - [Editing a Tutor Profile : `edit`](#editing-a-tutor-profile--edit)
+      - [Parameters](#parameters-1)
+      - [Constraints](#constraints-1)
+      - [Examples](#examples-1)
+      - [Invalid Usage](#invalid-usage)
+    - [Deleting a Tutor : `delete`](#deleting-a-tutor--delete)
+      - [Parameters](#parameters-2)
+      - [Examples](#examples-2)
+    - [Finding Tutors : `find`](#finding-tutors--find)
+      - [Prefixes](#prefixes)
+      - [Search Modes](#search-modes)
+      - [How Matching Works](#how-matching-works)
+      - [Examples](#examples-3)
+      - [Invalid Usage](#invalid-usage-1)
+    - [Sorting the Tutor List : `sort`](#sorting-the-tutor-list--sort)
+      - [Parameters](#parameters-3)
+      - [Examples](#examples-4)
+      - [Invalid Usage](#invalid-usage-2)
+    - [Listing All Tutors : `list`](#listing-all-tutors--list)
+    - [Clearing All Entries : `clear`](#clearing-all-entries--clear)
+    - [Exiting the Program : `exit`](#exiting-the-program--exit)
+  - [Data Management](#data-management)
+    - [Saving Your Data](#saving-your-data)
+    - [Editing the Data File Directly](#editing-the-data-file-directly)
+  - [FAQ](#faq)
+  - [Known Issues](#known-issues)
+  - [Command Summary](#command-summary)
 
 ---
 
@@ -292,7 +292,7 @@ Updates one or more fields of an existing Tutor Profile.
 
 ![Edit command hero image](images/editMessage.png)
 
-**Format:** `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [s/SUBJECT] [r/RATE] [t/TAG]…`
+**Format:** edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [s/SUBJECT]… [r/RATE] [t/TAG]…
 
 ---
 
@@ -310,7 +310,8 @@ Updates one or more fields of an existing Tutor Profile.
 
 <box type="warning" seamless>
 
-- **Single subject update:** Unlike `add`, you can only provide **one** `s/` prefix. To assign multiple subjects, map them all under a single prefix separated by spaces: `edit INDEX s/Math Physics`.
+- **Subjects are replaced, not added:** Any new subjects you provide will completely overwrite the tutor's existing subjects. Use multiple `s/` prefixes for multiple subjects (e.g. `edit INDEX s/Math s/English`). A single `s/Math Physics` value is **one** subject whose name contains a space, not two separate subjects.
+- **At least one subject:** You cannot clear all subjects with a bare `s/` or leave a profile with no subjects. If a data file is damaged and a tutor has no subjects, use `edit` with at least one valid `s/SUBJECT` to fix the profile.
 - **Tags are replaced, not added:** Any new tags you provide will completely overwrite the tutor's existing tags. To clear all tags, use an empty prefix: `t/`. To append a new tag, you must retype the existing ones.
 - **Identical edits are accepted:** Editing a tutor with values they already have (e.g. changing their rate to the same rate they currently charge) will be accepted as a valid command without throwing an error.
 - **No duplicates:** You cannot edit a profile to have the exact same phone number or email address as another tutor. See [Duplicate Tutors are Not Allowed](#duplicate-tutors-are-not-allowed).
@@ -343,7 +344,13 @@ Renames the 2nd tutor and removes all of their tags.
 edit 1 s/Physics r/30
 ```
 
-Changes the 1st tutor's subject to Physics and rate to $30/hr.
+Changes the 1st tutor's subjects to Physics only (replacing any previous subjects) and rate to $30/hr.
+
+```
+edit 2 s/Math s/English
+```
+
+Sets the 2nd tutor's subjects to Math and English only (replacing any previous subjects).
 
 **Expected output:**
 
@@ -743,7 +750,7 @@ A: The Help Window may be minimised. Check your taskbar and restore it manually.
 | ---------- | ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
 | **Help**   | `help`                                                                                                | `help`                                                                                                            |
 | **Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL s/SUBJECT1 s/SUBJECT2 ... s/SUBJECTn r/RATE [a/ADDRESS] [t/TAG]…​` | `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 s/Biology r/45 t/friend t/colleague` |
-| **Edit**   | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [s/SUBJECT] [r/RATE] [t/TAG]…`                   | `edit 2 n/James Lee e/james@example.com`                                                                          |
+| **Edit**   | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [s/SUBJECT]… [r/RATE] [t/TAG]…`                  | `edit 2 n/James Lee e/james@example.com`                                                                          |
 | **Delete** | `delete INDEX`                                                                                        | `delete 3`                                                                                                        |
 | **Find**   | `find KEYWORD` \| `find [PREFIXES]` \| `find KEYWORD [PREFIXES]`                                      | `find geography`, `find s/Biology r/45`, `find korean r/>50`                                                      |
 | **Sort**   | `sort FIELD ORDER`                                                                                    | `sort name asc`, `sort rate desc`                                                                                 |
