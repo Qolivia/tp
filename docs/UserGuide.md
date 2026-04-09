@@ -465,7 +465,7 @@ Search for tutors by keyword, name, subject, or hourly rate — or combine them 
 | Above  | `r/>RATE`       | Tutors charging more than `RATE`                        |
 | Below  | `r/<RATE`       | Tutors charging less than `RATE`                        |
 
-In every `r/` field above, each numeric token (`RATE`, `RATE1`, `RATE2`) must be **non-negative** (digits only; no minus sign). For ranges, `RATE1` must also be less than or equal to `RATE2`.
+In every `r/` field above, each numeric token (`RATE`, `RATE1`, `RATE2`) must be **non-negative** (integers only; no negative numbers). For ranges, `RATE1` must also be less than or equal to `RATE2`.
 
 **Mixed prefixes** — all conditions must be met
 
