@@ -120,6 +120,9 @@ Type a command into the **Command Box** at the bottom and press **Enter** to run
 
 ## Understanding the Interface
 
+![Annotated UI](images/user_interface_anno.png)
+
+
 Tuto's interface has three main areas:
 
 - **Tutor List Panel (Left)** — shows all Tutor Profiles saved
@@ -284,6 +287,7 @@ Updates one or more fields of an existing Tutor Profile.
 #### Parameters
 
 - `INDEX` refers to the number shown next to the tutor in the current list. It must be a **positive integer** (1, 2, 3 …).
+- **Accepted Prefixes:** Accepts the same prefixes (`n/`, `p/`, `e/`, `s/`, `r/`, `a/`, `t/`) as the `add` command.
 - After a **`sort`** or **`delete`**, indices may no longer match what you saw earlier — see [Understanding List Indices](#understanding-list-indices).
 - At least one field must be provided.
 - Existing values are replaced with the new values you provide.
@@ -389,7 +393,7 @@ Deletes the Tutor Profile with index 1
 
 **Expected output:**
 
-![Find message](images/delete_success.png)
+![Delete success output](images/delete_success.png)
 
 ---
 
