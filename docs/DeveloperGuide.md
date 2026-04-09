@@ -1,71 +1,78 @@
 ---
-
-## layout: default.md
-
+  layout: default.md
   title: "Developer Guide"
   pageNav: 3
+---
 
 # Tuto Developer Guide
+
+<box type="info" seamless>
 
 **Welcome to the Tuto Developer Guide!**
 This document describes the architecture, software design decisions, and implementation details of Tuto.
 It is intended for future developers, maintainers, and anyone interested in understanding the technical inner workings of the application.
 
+</box>
+
+<!-- * Table of Contents -->
+<page-nav-print />
+
 ---
 
 ## Table of Contents
 
-- [Table of Contents](#table-of-contents)
-- [**Acknowledgements**](#acknowledgements)
-- [**Setting up, getting started**](#setting-up-getting-started)
-- [**Design**](#design)
-  - [Architecture](#architecture)
-  - [UI component](#ui-component)
-  - [Logic component](#logic-component)
-  - [Model component](#model-component)
-  - [Storage component](#storage-component)
-  - [Common classes](#common-classes)
-- [**Implementation**](#implementation)
-  - [Adding a Tutor: `add`](#adding-a-tutor-add)
-    - [Alternative flows](#alternative-flows)
-  - [Uniqueness Constraints](#uniqueness-constraints)
-    - [Current Implementation](#current-implementation)
-    - [Design Considerations](#design-considerations)
-    - [Class Diagram](#class-diagram)
-    - [Sequence Diagram](#sequence-diagram)
-  - [Finding a Tutor: `find`](#finding-a-tutor-find)
-    - [Alternative flows](#alternative-flows-1)
-    - [Search Modalities](#search-modalities)
-    - [Design Considerations](#design-considerations-1)
-      - [Aspect: Search Modalities and User Experience](#aspect-search-modalities-and-user-experience)
-      - [Aspect: UI Context and the Query Bar](#aspect-ui-context-and-the-query-bar)
-- [**Documentation, logging, testing, configuration, dev-ops**](#documentation-logging-testing-configuration-dev-ops)
-- [**Appendix: Requirements**](#appendix-requirements)
-  - [Product scope](#product-scope)
-  - [User stories](#user-stories)
-  - [Use cases](#use-cases)
-    - [Use Case: U1. View all Tutor Profile](#use-case-u1-view-all-tutor-profile)
-    - [Use Case: U2. Delete a Tutor from Tuto](#use-case-u2-delete-a-tutor-from-tuto)
-    - [Use Case: U3. Add a Tutor Profile](#use-case-u3-add-a-tutor-profile)
-    - [Use Case: U4. Search for Tutors by Subject](#use-case-u4-search-for-tutors-by-subject)
-    - [Use Case: U5. Edit a Tutor Profile](#use-case-u5-edit-a-tutor-profile)
-    - [Use Case: U6. Find Tutors](#use-case-u6-find-tutors)
-    - [Use Case: U7. Sort the Tutor List](#use-case-u7-sort-the-tutor-list)
-  - [Non-Functional Requirements](#non-functional-requirements)
-  - [Glossary](#glossary)
-- [**Appendix: Instructions for manual testing**](#appendix-instructions-for-manual-testing)
-  - [Launch and shutdown](#launch-and-shutdown)
-  - [Adding a person](#adding-a-person)
-  - [Deleting a person](#deleting-a-person)
-  - [Editing a person](#editing-a-person)
-  - [Finding a person](#finding-a-person)
-    - [Negative Cases \& Error Handling](#negative-cases--error-handling)
-    - [Positive Cases (Universal Search)](#positive-cases-universal-search)
-    - [Complex Cases (Attribute Filtering \& Combinations)](#complex-cases-attribute-filtering--combinations)
-    - [Adversarial \& Edge Cases](#adversarial--edge-cases)
-  - [Sorting the tutor list](#sorting-the-tutor-list)
-    - [Invalid commands and errors](#invalid-commands-and-errors)
-  - [Saving data](#saving-data)
+- [Tuto Developer Guide](#tuto-developer-guide)
+  - [Table of Contents](#table-of-contents)
+  - [**Acknowledgements**](#acknowledgements)
+  - [**Setting up, getting started**](#setting-up-getting-started)
+  - [**Design**](#design)
+    - [Architecture](#architecture)
+    - [UI component](#ui-component)
+    - [Logic component](#logic-component)
+    - [Model component](#model-component)
+    - [Storage component](#storage-component)
+    - [Common classes](#common-classes)
+  - [**Implementation**](#implementation)
+    - [Adding a Tutor: `add`](#adding-a-tutor-add)
+      - [Alternative flows](#alternative-flows)
+    - [Uniqueness Constraints](#uniqueness-constraints)
+      - [Current Implementation](#current-implementation)
+      - [Design Considerations](#design-considerations)
+      - [Class Diagram](#class-diagram)
+      - [Sequence Diagram](#sequence-diagram)
+    - [Finding a Tutor: `find`](#finding-a-tutor-find)
+      - [Alternative flows](#alternative-flows-1)
+      - [Search Modalities](#search-modalities)
+      - [Design Considerations](#design-considerations-1)
+        - [Aspect: Search Modalities and User Experience](#aspect-search-modalities-and-user-experience)
+        - [Aspect: UI Context and the Query Bar](#aspect-ui-context-and-the-query-bar)
+  - [**Documentation, logging, testing, configuration, dev-ops**](#documentation-logging-testing-configuration-dev-ops)
+  - [**Appendix: Requirements**](#appendix-requirements)
+    - [Product scope](#product-scope)
+    - [User stories](#user-stories)
+    - [Use cases](#use-cases)
+      - [Use Case: U1. View all Tutor Profile](#use-case-u1-view-all-tutor-profile)
+      - [Use Case: U2. Delete a Tutor from Tuto](#use-case-u2-delete-a-tutor-from-tuto)
+      - [Use Case: U3. Add a Tutor Profile](#use-case-u3-add-a-tutor-profile)
+      - [Use Case: U4. Search for Tutors by Subject](#use-case-u4-search-for-tutors-by-subject)
+      - [Use Case: U5. Edit a Tutor Profile](#use-case-u5-edit-a-tutor-profile)
+      - [Use Case: U6. Find Tutors](#use-case-u6-find-tutors)
+      - [Use Case: U7. Sort the Tutor List](#use-case-u7-sort-the-tutor-list)
+    - [Non-Functional Requirements](#non-functional-requirements)
+    - [Glossary](#glossary)
+  - [**Appendix: Instructions for manual testing**](#appendix-instructions-for-manual-testing)
+    - [Launch and shutdown](#launch-and-shutdown)
+    - [Adding a person](#adding-a-person)
+    - [Deleting a person](#deleting-a-person)
+    - [Editing a person](#editing-a-person)
+    - [Finding a person](#finding-a-person)
+      - [Negative Cases \& Error Handling](#negative-cases--error-handling)
+      - [Positive Cases (Universal Search)](#positive-cases-universal-search)
+      - [Complex Cases (Attribute Filtering \& Combinations)](#complex-cases-attribute-filtering--combinations)
+      - [Adversarial \& Edge Cases](#adversarial--edge-cases)
+    - [Sorting the tutor list](#sorting-the-tutor-list)
+      - [Invalid commands and errors](#invalid-commands-and-errors)
+    - [Saving data](#saving-data)
 
 ---
 
@@ -77,7 +84,7 @@ It is intended for future developers, maintainers, and anyone interested in unde
 
 ## **Setting up, getting started**
 
-Refer to the guide *[Setting up and getting started](SettingUp.md)*.
+Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
 ---
 
@@ -85,46 +92,54 @@ Refer to the guide *[Setting up and getting started](SettingUp.md)*.
 
 ### Architecture
 
-The ***Architecture Diagram*** given above explains the high-level design of the App.
+<puml src="diagrams/ArchitectureDiagram.puml" width="280" />
+
+The **_Architecture Diagram_** given above explains the high-level design of the App.
 
 Given below is a quick overview of main components and how they interact with each other.
 
 **Main components of the architecture**
 
-`**Main`** (consisting of classes `[Main](https://github.com/AY2526S2-CS2103T-T15-3/tp/tree/master/src/main/java/seedu/address/Main.java)` and `[MainApp](https://github.com/AY2526S2-CS2103T-T15-3/tp/tree/master/src/main/java/seedu/address/MainApp.java)`) is in charge of the app launch and shut down.
+**`Main`** (consisting of classes [`Main`](https://github.com/AY2526S2-CS2103T-T15-3/tp/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/AY2526S2-CS2103T-T15-3/tp/tree/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
 
 - At app launch, it initializes the other components in the correct sequence, and connects them up with each other.
 - At shut down, it shuts down the other components and invokes cleanup methods where necessary.
 
 The bulk of the app's work is done by the following four components:
 
-- `**[UI](#ui-component)`**: The UI of the App.
-- `**[Logic](#logic-component)`**: The command executor.
-- `**[Model](#model-component)**`: Holds the data of the App in memory.
-- `**[Storage](#storage-component)**`: Reads data from, and writes data to, the hard disk.
+- [**`UI`**](#ui-component): The UI of the App.
+- [**`Logic`**](#logic-component): The command executor.
+- [**`Model`**](#model-component): Holds the data of the App in memory.
+- [**`Storage`**](#storage-component): Reads data from, and writes data to, the hard disk.
 
-`**[Commons](#common-classes)**` represents a collection of classes used by multiple other components.
+[**`Commons`**](#common-classes) represents a collection of classes used by multiple other components.
 
 **How the architecture components interact with each other**
 
-The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `delete 1`.
+The _Sequence Diagram_ below shows how the components interact with each other for the scenario where the user issues the command `delete 1`.
+
+<puml src="diagrams/ArchitectureSequenceDiagram.puml" width="574" />
 
 Each of the four main components (also shown in the diagram above),
 
-- defines its *API* in an `interface` with the same name as the Component.
+- defines its _API_ in an `interface` with the same name as the Component.
 - implements its functionality using a concrete `{Component Name}Manager` class (which follows the corresponding API `interface` mentioned in the previous point.
 
 For example, the `Logic` component defines its API in the `Logic.java` interface and implements its functionality using the `LogicManager.java` class which follows the `Logic` interface. Other components interact with a given component through its interface rather than the concrete class (reason: to prevent outside component's being coupled to the implementation of a component), as illustrated in the (partial) class diagram below.
+
+<puml src="diagrams/ComponentManagers.puml" width="300" />
 
 The sections below give more details of each component.
 
 ### UI component
 
-The **API** of this component is specified in `[Ui.java](https://github.com/AY2526S2-CS2103T-T15-3/tp/blob/master/src/main/java/seedu/address/ui/Ui.java)`
+The **API** of this component is specified in [`Ui.java`](https://github.com/AY2526S2-CS2103T-T15-3/tp/blob/master/src/main/java/seedu/address/ui/Ui.java)
+
+<puml src="diagrams/UiClassDiagram.puml" alt="Structure of the UI Component"/>
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
-The `UI` component uses the JavaFX UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the `[MainWindow](https://github.com/AY2526S2-CS2103T-T15-3/tp/blob/master/src/main/java/seedu/address/ui/MainWindow.java)` is specified in `[MainWindow.fxml](https://github.com/AY2526S2-CS2103T-T15-3/tp/blob/master/src/main/resources/view/MainWindow.fxml)`
+The `UI` component uses the JavaFX UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/AY2526S2-CS2103T-T15-3/tp/blob/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/AY2526S2-CS2103T-T15-3/tp/blob/master/src/main/resources/view/MainWindow.fxml)
 
 The `UI` component,
 
@@ -135,25 +150,36 @@ The `UI` component,
 
 The following sequence diagram illustrates the interactions between the `UI` and `Logic` components when executing a `Find` name command attribute on the updated UI.
 
+<puml src="diagrams/UiFindSequenceDiagram.puml" alt="Interactions between the UI and Logic Components for the `find n/john` command" />
+
 ### Logic component
 
-The **API** of this component is specified in `[Logic.java](https://github.com/AY2526S2-CS2103T-T15-3/tp/tree/master/src/main/java/seedu/address/logic/Logic.java)`
+The **API** of this component is specified in [`Logic.java`](https://github.com/AY2526S2-CS2103T-T15-3/tp/tree/master/src/main/java/seedu/address/logic/Logic.java)
 
 Here's a (partial) class diagram of the `Logic` component:
 
+<puml src="diagrams/LogicClassDiagram.puml" width="550"/>
+
 The sequence diagram below illustrates the interactions within the `Logic` component, taking `execute("delete 1")` API call as an example.
 
+<puml src="diagrams/DeleteSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `delete 1` Command" />
+
+<box type="info" seamless>
+
 **Note:** The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline continues till the end of diagram.
+</box>
 
 How the `Logic` component works:
 
 1. When `Logic` is called upon to execute a command, it is passed to an `AddressBookParser` object which in turn creates a parser that matches the command (e.g., `DeleteCommandParser`) and uses it to parse the command.
 2. This results in a `Command` object (more precisely, an object of one of its subclasses e.g., `DeleteCommand`) which is executed by the `LogicManager`.
-3. The command can communicate with the `Model` when it is executed (e.g. to delete a person).
-  Note that although this is shown as a single step in the diagram above (for simplicity), in the code it can take several interactions (between the command object and the `Model`) to achieve.
+3. The command can communicate with the `Model` when it is executed (e.g. to delete a person).<br>
+   Note that although this is shown as a single step in the diagram above (for simplicity), in the code it can take several interactions (between the command object and the `Model`) to achieve.
 4. The result of the command execution is encapsulated as a `CommandResult` object which is returned back from `Logic`.
 
 Here are the other classes in `Logic` (omitted from the class diagram above) that are used for parsing a user command:
+
+<puml src="diagrams/ParserClasses.puml" width="600"></puml>
 
 How the parsing works:
 
@@ -162,20 +188,30 @@ How the parsing works:
 
 ### Model component
 
-The **API** of this component is specified in `[Model.java](https://github.com/AY2526S2-CS2103T-T15-3/tp/tree/master/src/main/java/seedu/address/model/Model.java)`
+The **API** of this component is specified in [`Model.java`](https://github.com/AY2526S2-CS2103T-T15-3/tp/tree/master/src/main/java/seedu/address/model/Model.java)
+
+<puml src="diagrams/ModelClassDiagram.puml" width="450" />
 
 The `Model` component,
 
 - stores the address book data i.e., all `Person` objects (which are contained in a `UniquePersonList` object).
-- stores the currently 'selected' `Person` objects (e.g., results of a search query) as a separate *filtered* list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+- stores the currently 'selected' `Person` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 - stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
 - does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
 
-**Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Person` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Person` needing their own `Tag` objects.  
+<box type="info" seamless>
+
+**Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Person` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Person` needing their own `Tag` objects.<br>
+
+<puml src="diagrams/BetterModelClassDiagram.puml" width="450" />
+
+</box>
 
 ### Storage component
 
-The **API** of this component is specified in `[Storage.java](https://github.com/AY2526S2-CS2103T-T15-3/tp/tree/master/src/main/java/seedu/address/storage/Storage.java)`
+The **API** of this component is specified in [`Storage.java`](https://github.com/AY2526S2-CS2103T-T15-3/tp/tree/master/src/main/java/seedu/address/storage/Storage.java)
+
+<puml src="diagrams/StorageClassDiagram.puml" width="550" />
 
 The `Storage` component,
 
@@ -197,6 +233,8 @@ This section describes some noteworthy details on how certain features are imple
 
 Adds a new tutor profile to Tuto.
 The sequence diagram below illustrates the interactions between the Logic and Model components during the execution of the `add` command.
+
+<puml src="diagrams/AddSequenceDiagram.puml" width="550"></puml>
 
 The `add` command is processed in two main phases: parsing and execution.
 The input string from user is first parsed into an `Person` object, which is then wrapped in an `AddCommand` object and executed to update the `Model` object.
@@ -287,9 +325,13 @@ and how they interact structurally.
 `ModelManager` implements `Model` and delegates to `AddressBook`, which contains a
 `UniquePersonList` that stores all `Person` objects.
 
+<puml src="diagrams/UniquenessConstraintClassDiagram.puml" />
+
 #### Sequence Diagram
 
 The following diagram illustrates how duplicate checks are performed during an `add` operation:
+
+<puml src="diagrams/UniquenessConstraintSequence.puml" />
 
 ---
 
@@ -315,9 +357,15 @@ The sequence of interactions is as follows:
 
 The diagram below shows how the UI interactions are executed after the command returns.
 
+<puml src="diagrams/UiFindSequenceDiagram.puml" />
+
 The diagram below illustrates the interactions inside the Logic and Model components.
 
+<puml src="diagrams/FindSequenceDiagram.puml" />
+
 The diagram below shows the parser classes involved in handling the `find` command.
+
+<puml src="diagrams/FindParserClassDiagram.puml" width="500"/>
 
 #### Alternative flows
 
@@ -416,7 +464,7 @@ make decisions of a Tutor for their Children.
 
 ### User stories
 
-Priorities: High (must have) - `*` * *, Medium (nice to have) - `*`* , Low (unlikely to have) - `*`
+Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
 
 | Priority | As a ... | I can ...                                                                   | So that ...                                                         |
@@ -647,8 +695,12 @@ Guarantees: If MSS completes until step 3, `Tuto` reorders the currently display
 
 Given below are instructions to test the app manually.
 
+<box type="info" seamless>
+
 **Note:** These instructions only provide a starting point for testers to work on;
 testers are expected to do more *exploratory* testing.
+
+</box>
 
 ### Launch and shutdown
 
