@@ -799,7 +799,7 @@ testers are expected to do more _exploratory_ testing.
        Expected: No person is edited. A duplicate email error message is shown.
 
 6. Editing a person with an invalid index
-    1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+    1. Prerequisites: List all persons using the `list` command. Multiple persons exist in the list, and the list size is smaller than 999.
     2. Test case: `edit 0 n/Jane Doe`<br>
        Expected: No person is edited. An invalid index error message is shown.
     3. Test case: `edit 999 n/Jane Doe`<br>
