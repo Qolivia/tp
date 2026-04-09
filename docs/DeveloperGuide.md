@@ -737,6 +737,13 @@ testers are expected to do more _exploratory_ testing.
        Reason: Tuto prohibits the addition of a person whose contact number and/or email address already exists within the current list of tutor profiles.
     2. Test case: `add n/Jane Smith p/91234567 e/jane@example.com a/Clementi 6th Street s/Mathematics r/s t/friend`<br>
        Expected: No person is added. An error message indicating that rates can only contain numbers is shown 
+
+9. Adding a person with duplicate phone or email
+    1. Prerequisites: A person with phone number `91234567` already exists in the list, and a person with email `jane@example.com` already exists in the list.
+    2. Test case: `add n/John Doe p/91234567 e/john@example.com s/Math r/50`<br>
+       Expected: No person is added. An error message indicating that a tutor with that phone number already exists is shown.
+    3. Test case: `add n/John Doe p/98765432 e/jane@example.com s/Math r/50`<br>
+       Expected: No person is added. An error message indicating that a tutor with that email already exists is shown.
    
 ### Deleting a person
 
