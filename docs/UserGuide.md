@@ -40,7 +40,7 @@ This guide is written for parents who are comfortable using a keyboard and want 
       - [Prefixes](#prefixes)
       - [Search Modes](#search-modes)
       - [How Matching Works](#how-matching-works)
-      - [Examples](#examples)````
+      - [Examples](#examples)
       - [Invalid Usage](#invalid-usage)
     - [Sorting the Tutor List : `sort`](#sorting-the-tutor-list-sort)
     - [Listing All Tutors : `list`](#listing-all-tutors-list)
@@ -221,15 +221,15 @@ Adds a new Tutor Profile to Tuto.
 
 #### Parameters
 
-| Prefix | Field             | Required | Accepted values                                                         |
-| ------ | ----------------- | -------- | ----------------------------------------------------------------------- |
-| `n/`   | Name              | Yes      | Alphanumeric text + spaces                                              |
-| `p/`   | Phone number      | Yes      | Digits only, at least 3 digits                                          |
-| `e/`   | Email             | Yes      | Valid email format (e.g. `user@example.com`)                            |
-| `s/`   | Subject           | Yes      | Alphanumeric text + spaces (e.g. `Advanced Mathematics`, `Biology`)     |
-| `r/`   | Hourly rate (SGD) | Yes      | Positive integer value (including zero)                                 |
-| `a/`   | Address           | No       | Any text                                                                |
-| `t/`   | Tag               | No       | Alphanumeric text, no spaces                                            |
+| Prefix | Field             | Required | Accepted values                                                     |
+| ------ | ----------------- | -------- |---------------------------------------------------------------------|
+| `n/`   | Name              | Yes      | Alphanumeric text + spaces                                          |
+| `p/`   | Phone number      | Yes      | Digits only, at least 3 digits                                      |
+| `e/`   | Email             | Yes      | Valid email format (e.g. `user@example.com`)                        |
+| `s/`   | Subject           | Yes      | Alphanumeric text + spaces (e.g. `Advanced Mathematics`, `Biology`) |
+| `r/`   | Hourly rate (SGD) | Yes      | 0 or any positive integer                                           |
+| `a/`   | Address           | No       | Any text                                                            |
+| `t/`   | Tag               | No       | Alphanumeric text, no spaces                                        |
 
 <box type="tip" seamless>
 
@@ -315,9 +315,9 @@ Updates one or more fields of an existing Tutor Profile.
 edit 3 e/ qingrong@example.com t/ best
 ```
 
-Updates the phone number and email of the 3rd tutor in the list.
+Updates the email and tags of the 3rd tutor in the list.
 
-**Replacing tags**
+**Removing tags**
 
 ```
 edit 2 t/
