@@ -15,7 +15,7 @@ public class Phone {
             + "1. Be 8 digits (will default to +65), OR \n"
             + "2. Start with '+' followed up by 10 digits.";
     private static final String DIGIT_REGEX = "\\d{8}";
-    private static String INTERNATIONAL_REGEX = "\\+\\d+";
+    private static final String international_regex = "\\+\\d+";
     public final String value;
 
     /**
@@ -40,7 +40,7 @@ public class Phone {
      * Returns true if a given string is a valid phone number.
      */
     public static boolean isValidPhone(String test) {
-        if (!test.matches(INTERNATIONAL_REGEX)) {
+        if (!test.matches(international_regex)) {
             return false;
         }
 

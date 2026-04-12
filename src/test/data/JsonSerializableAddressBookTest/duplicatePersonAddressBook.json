@@ -1,7 +1,7 @@
 {
   "persons": [ {
     "name": "Alice Pauline",
-    "phone": "94351253",
+    "phone": "+6594351253",
     "email": "alice@example.com",
     "address": "123, Jurong West Ave 6, #08-111",
     "subject": [ "Math" ],
@@ -9,7 +9,7 @@
     "tags": [ "friends" ]
   }, {
     "name": "Alice Pauline",
-    "phone": "94351253",
+    "phone": "+6594351253",
     "email": "pauline@example.com",
     "address": "4th street",
     "subject":[ "Math" ],
