@@ -226,7 +226,7 @@ Adds a new Tutor Profile to Tuto.
 | `p/`   | Phone number      | Yes      | 8 digits for Singapore number, 10 digits excluding '+' for international number                                                                                                                                                                                                  |
 | `e/`   | Email             | Yes      | Valid email format (e.g. `user@example.com`) The local-part must start and end with an alphanumeric character, and the domain must contain period-separated labels ending in a label of at least 2 characters. Consecutive special characters (e.g. `..`, `--`) are not allowed. |
 | `s/`   | Subject           | Yes      | Alphanumeric text + spaces (e.g. `Advanced Mathematics`, `Biology`)                                                                                                                                                                                                              |
-| `r/`   | Hourly rate (SGD) | Yes      | 0 or any positive integer                                                                                                                                                                                                                                                        |
+| `r/`   | Hourly rate (SGD) | Yes      | 0 or any positive decimal value (e.g. `25` or `25.50`)                                                                                                                                                                                                                           |
 | `a/`   | Address           | No       | Any text (must not contain valid prefixes such as s/, as these will be interpreted as separate fields)                                                                                                                                                                           |
 | `t/`   | Tag               | No       | Alphanumeric text, no spaces                                                                                                                                                                                                                                                     |
 
@@ -238,7 +238,7 @@ Adds a new Tutor Profile to Tuto.
 2. A person can have any number of tags (including 0) and multiple subjects.
 3. Command parameters can be entered in any order.
 4. You cannot repeat the same subject or tag value in one command, even if the casing is different (e.g. s/Math s/math or t/friend t/friend is rejected).
-5. Rate can only be positive integer. No decimal values are allowed.
+5. Rate must be zero or positive; decimals are allowed.
 </box>
 
 ---
@@ -425,19 +425,6 @@ Search for tutors by keyword, name, subject, or hourly rate — or combine them 
 <box type="tip" seamless>
 
 **Tip:** Spaces after prefixes are optional — `find n/John` and `find n/ John` both work.
-
-</box>
-
-<box type="info" seamless>
-
-**Note on words after prefixes:**
-Words that appear after a prefix are treated as part of that prefix value until another recognised prefix appears.
-
-For example:
-- `find n/Alex Tan` treats `Alex Tan` as the value of `n/`
-- `find r/25 Alex` treats `25 Alex` as the value of `r/`, which may result in an invalid rate format error
-
-If you want to combine general keywords with prefixes, place the general keywords before any prefixes.
 
 </box>
 
@@ -730,14 +717,14 @@ A: Delete the `preferences.json` file in the same folder as `tuto.jar`, then rel
 
 **Q: I ran `help` again but the Help Window did not appear. Why?**
 
-A: If the Help Window is already open but minimised, running `help` again does not automatically restore or refocus it. Check your taskbar or dock and restore it manually.
+A: The Help Window may be minimised. Check your taskbar and restore it manually.
 
 ---
 
 ## Known Issues
 
 1. **Off-screen window after disconnecting a monitor:** Delete `preferences.json` and relaunch Tuto to reset the window position.
-2. **Help Window does not reappear:** If the Help Window is already open but minimised, running `help` again will not restore or focus it. Restore the minimised window from your taskbar or dock.
+2. **Help Window does not reappear:** If the Help Window is minimised, running `help` again will not open a new one. Restore the minimised window from your taskbar.
 
 ---
 
