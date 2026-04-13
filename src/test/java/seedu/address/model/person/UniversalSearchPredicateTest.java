@@ -45,7 +45,7 @@ public class UniversalSearchPredicateTest {
         assertMatch("Ali", new PersonBuilder().withName("Alice Bob").build());
 
         // Phone match (prefix)
-        assertMatch("123", new PersonBuilder().withPhone("12345").build());
+        assertMatch("+6512345678", new PersonBuilder().withPhone("+6512345678").build());
 
         // Email match (prefix)
         assertMatch("ali", new PersonBuilder().withEmail("alice@example.com").build());
