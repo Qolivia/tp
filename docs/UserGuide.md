@@ -349,10 +349,12 @@ Sets the 2nd tutor's subjects to Math and English only (replacing any previous s
 
 #### Invalid Usage
 
-**Duplicate Output:**
+**Duplicate Error:**
+Shown when the edited phone number or email already belongs to another tutor.
 ![edit_duplicate](images/edit_duplicate.png)
 
-**Error Output:**
+**Invalid Input Error:**
+Shown when the `edit` command is missing required fields.
 ![edit_error](images/edit_error.png)
 
 ---
