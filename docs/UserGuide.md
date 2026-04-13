@@ -730,14 +730,14 @@ A: Delete the `preferences.json` file in the same folder as `tuto.jar`, then rel
 
 **Q: I ran `help` again but the Help Window did not appear. Why?**
 
-A: The Help Window may be minimised. Check your taskbar and restore it manually.
+A: If the Help Window is already open but minimised, running `help` again does not automatically restore or refocus it. Check your taskbar or dock and restore it manually.
 
 ---
 
 ## Known Issues
 
 1. **Off-screen window after disconnecting a monitor:** Delete `preferences.json` and relaunch Tuto to reset the window position.
-2. **Help Window does not reappear:** If the Help Window is minimised, running `help` again will not open a new one. Restore the minimised window from your taskbar.
+2. **Help Window does not reappear:** If the Help Window is already open but minimised, running `help` again will not restore or focus it. Restore the minimised window from your taskbar or dock.
 
 ---
 
